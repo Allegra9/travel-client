@@ -1,4 +1,4 @@
-import React  Component from 'react';
+import React, { Component } from 'react';
 import { getAllTrips } from '../adapter/api';
 
 class Trip extends React.Component {
@@ -10,14 +10,14 @@ class Trip extends React.Component {
   componentDidMount() {
     getAllTrips()
       .then(trips => {
-        this.setState({ trips )}
+        this.setState({ trips })
       })
   }
 
   render() {
 
   const trips = this.state.trips.map(trip => {
-    return <li>{trip}</li>
+    return <li>Trip: {trip.name} in {trip.location}, {trip.country}</li>
   })
 
     return (

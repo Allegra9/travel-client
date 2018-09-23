@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { getAllTrips } from '../adapter/api';
+import NewTripForm from './NewTripForm'
 
-class Trip extends React.Component {
+class Trip extends Component {
 
   state={
     trips: [],
@@ -26,6 +27,7 @@ class Trip extends React.Component {
         <ul>
           {trips}
         </ul>
+        <NewTripForm />
       </div>
     )
   }

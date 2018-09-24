@@ -6,6 +6,7 @@ class Trip extends Component {
 
   state={
     trips: [],
+    tripsCount: '',
   }
 
   componentDidMount() {
@@ -15,10 +16,34 @@ class Trip extends Component {
       })
   }
 
+  //re-renders Trips anytime a new trip is added:
+  addTrip = () => {
+    console.log("ADD TRIP in Trip was hit")
+    this.setState({
+      tripsCount: this.state.tripsCount + 1
+    }, () => getAllTrips()
+    .then(trips => {
+      this.setState({ trips })
+    })
+   )
+  }
+
   render() {
 
   const trips = this.state.trips.map(trip => {
-    return <li>Trip: {trip.name} in {trip.location}, {trip.country}</li>
+    return (
+      <li key={trip.id}>
+        NAME: {trip.name} <br/>
+        LOCATION: {trip.location} <br/>
+        COUNTRY: {trip.country} <br/>
+        THINGS DID: {trip.things_did} <br/>
+        NOTES: {trip.notes} <br/>
+        DATE FROM: {trip.date_from} <br/>
+        DATE TO: {trip.date_to} <br/>
+        USER ID: {trip.user_id} <br/>
+        TRIP ID: {trip.id}
+      </li>
+    )
   })
 
     return (
@@ -27,7 +52,7 @@ class Trip extends Component {
         <ul>
           {trips}
         </ul>
-        <NewTripForm />
+        <NewTripForm addTrip={this.addTrip}/>
       </div>
     )
   }

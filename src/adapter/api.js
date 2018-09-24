@@ -17,22 +17,3 @@ export const postTrip = (tripObj) => {
     body: JSON.stringify(tripObj)
   })
 }
-
-  // Parameters: {
-  //   "user_id"=>1,
-  //   "name"=>"Aya's bday weekend",
-  //   "location"=>"Amalfi Coast",
-  //   "country"=>"Italy",
-  //   "thingsDid"=>"Pizza & fun",
-  //   "dateFrom"=>"2018-11-27",
-  //   "dateTo"=>"2018-12-01",
-  //   "notes"=>"It was warm for November. Almost went swimming",
-  //
-  //   "trip"=>{
-  //     "name"=>"Aya's bday weekend",
-  //     "country"=>"Italy",
-  //     "location"=>"Amalfi Coast",
-  //     "notes"=>"It was warm for November. Almost went swimming",
-  //     "user_id"=>1
-  //   }
-  // }

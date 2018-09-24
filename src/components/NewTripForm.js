@@ -8,9 +8,9 @@ class NewTripForm extends Component{
     name: '',
     location: '',
     country: '',
-    thingsDid: '',
-    dateFrom: '',
-    dateTo: '',
+    things_did: '',
+    date_from: '',
+    date_to: '',
     notes: '',
   }
 
@@ -22,11 +22,11 @@ class NewTripForm extends Component{
         name: '',
         location: '',
         country: '',
-        thingsDid: '',
-        dateFrom: '',
-        dateTo: '',
+        things_did: '',
+        date_from: '',
+        date_to: '',
         notes: '',
-    })
+    }, () => this.props.addTrip() )
   }
 
   handleChange = (e) => {
@@ -42,31 +42,31 @@ class NewTripForm extends Component{
           <input type="text" value={this.state.name} name="name"
             onChange={this.handleChange}
             placeholder="Trip name"
-          />
+          /> <br/>
         <input type="text" value={this.state.location} name="location"
             onChange={this.handleChange}
             placeholder="Location"
-          />
+          /> <br/>
         <input type="text" value={this.state.country} name="country"
             onChange={this.handleChange}
             placeholder="Country"
-          />
-        <input type="text" value={this.state.thingsDid} name="thingsDid"
+          /> <br/>
+        <input type="text" value={this.state.things_did} name="things_did"
             onChange={this.handleChange}
             placeholder="Things did"
-          />
+          /> <br/>
         <input type="text" value={this.state.notes} name="notes"
             onChange={this.handleChange}
             placeholder="Notes"
-          />
-        <input type="text" value={this.state.dateFrom} name="dateFrom"
+          /> <br/>
+        <input type="text" value={this.state.date_from} name="date_from"
             onChange={this.handleChange}
             placeholder="date from"
-          />
-        <input type="text" value={this.state.dateTo} name="dateTo"
+          /> <br/>
+        <input type="text" value={this.state.date_to} name="date_to"
             onChange={this.handleChange}
             placeholder="date to"
-          />
+          /> <br/>
         <input type="submit" value="Submit" />
         </form>
       </div>

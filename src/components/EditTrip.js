@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { createTrip } from '../adapter/api';
+import { editTrip } from '../adapter/api';
 
-class NewTripForm extends Component{
+class EditTrip extends Component{
 
+//DO I NEED STATE HERE?
   state={
-    user_id: 1,
+    user_id: '',
     name: '',
     location: '',
     country: '',
@@ -12,12 +13,13 @@ class NewTripForm extends Component{
     date_from: '',
     date_to: '',
     notes: '',
+    id: '',
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
     console.log(this.state)
-    createTrip(this.state)
+    editTrip(this.state)   //PATCH pls
     this.setState({
         name: '',
         location: '',
@@ -26,7 +28,7 @@ class NewTripForm extends Component{
         date_from: '',
         date_to: '',
         notes: '',
-    }, () => this.props.addTrip() )
+    }, () => this.props.addTrip() )  // need this
   }
 
   handleChange = (e) => {
@@ -35,7 +37,31 @@ class NewTripForm extends Component{
     })
   }
 
+  componentDidUpdate(prevProps) {  // compares before updating
+    if (prevProps.trip.id !== this.props.trip.id){
+      console.log("Trip I'm editing: ", this.props.trip.id)
+      this.getTrip(this.props.trip.id)
+    }
+  }
+
+  getTrip = () => {
+    this.setState({
+      user_id: this.props.trip.user_id,
+      name: this.props.trip.name,
+      location: this.props.trip.location,
+      country: this.props.trip.country,
+      things_did: this.props.trip.things_did,
+      date_from: this.props.trip.date_from,
+      date_to: this.props.trip.date_to,
+      notes: this.props.trip.notes,
+      id: this.props.trip.id
+    })
+  }
+
   render() {
+
+    //const { trip } = this.props;
+
     return (
       <div>
         <form onSubmit={this.handleSubmit} >
@@ -67,11 +93,11 @@ class NewTripForm extends Component{
             onChange={this.handleChange}
             placeholder="date to"
           /> <br/>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Update" />
         </form>
       </div>
     )
   }
 }
 
-export default NewTripForm
+export default EditTrip

@@ -3,7 +3,6 @@ import { editTrip } from '../adapter/api';
 
 class EditTrip extends Component{
 
-//DO I NEED STATE HERE?
   state={
     user_id: '',
     name: '',
@@ -40,21 +39,25 @@ class EditTrip extends Component{
   componentDidUpdate(prevProps) {  // compares before updating
     if (prevProps.trip.id !== this.props.trip.id){
       console.log("Trip I'm editing: ", this.props.trip.id)
-      this.getTrip(this.props.trip.id)
+      this.getTrip(this.props.trip)
     }
   }
 
-  getTrip = () => {
+  componentDidMount() {
+    this.getTrip(this.props.trip)
+  }
+
+  getTrip = (trip) => {
     this.setState({
-      user_id: this.props.trip.user_id,
-      name: this.props.trip.name,
-      location: this.props.trip.location,
-      country: this.props.trip.country,
-      things_did: this.props.trip.things_did,
-      date_from: this.props.trip.date_from,
-      date_to: this.props.trip.date_to,
-      notes: this.props.trip.notes,
-      id: this.props.trip.id
+      user_id: trip.user_id,
+      name: trip.name,
+      location: trip.location,
+      country: trip.country,
+      things_did: trip.things_did,
+      date_from: trip.date_from,
+      date_to: trip.date_to,
+      notes: trip.notes,
+      id: trip.id
     })
   }
 

@@ -38,6 +38,7 @@ class NewTripForm extends Component{
   render() {
     return (
       <div>
+        NEW TRIP:
         <form onSubmit={this.handleSubmit} >
           <input type="text" value={this.state.name} name="name"
             onChange={this.handleChange}
@@ -69,6 +70,7 @@ class NewTripForm extends Component{
           /> <br/>
         <input type="submit" value="Submit" />
         </form>
+        <h4 onClick={this.props.resetNewTrip}>cancel</h4>
       </div>
     )
   }

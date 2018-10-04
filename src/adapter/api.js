@@ -10,10 +10,11 @@ export const getAllTrips = () => {
     .then(res => res.json())
 }
 
-// export const getTrip = (trip) => {
-//   return fetch(`${API_ROOT}/trips/${trip.id}`)
-//     .then(res => res.json())
-// }
+export const getTrip = (trip_id) => {
+  console.log("GETTING ONE:", trip_id)
+  return fetch(`${API_ROOT}/trips/${trip_id}`)
+    .then(res => res.json())
+}
 
 export const createTrip = (trip) => {
   console.log(trip)
@@ -34,5 +35,5 @@ export const editTrip = (trip) => {
       //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS'
     },
     body: JSON.stringify(trip)
-  })//.then( resp => resp.json() )
+  }).then( resp => resp.json() )
 }

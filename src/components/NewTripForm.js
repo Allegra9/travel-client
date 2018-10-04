@@ -70,7 +70,7 @@ class NewTripForm extends Component{
           /> <br/>
         <input type="submit" value="Submit" />
         </form>
-        <h4 onClick={this.props.resetNewTrip}>cancel</h4>
+        <h4 onClick={this.props.cancelNewForm}>cancel</h4>
       </div>
     )
   }

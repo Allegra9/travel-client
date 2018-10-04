@@ -9,10 +9,8 @@ class Trip extends Component {
   state={
     trips: [],
     tripsCount: '',
-    addNewTrip: '',
-
+    newForm: '',
     tripToShow: ''
-    //tripToEdit: '',
   }
 
   componentDidMount() {
@@ -24,10 +22,10 @@ class Trip extends Component {
 
   //re-renders Trips anytime a new trip is added:
   addTrip = () => {
-    console.log("ADD TRIP in Trip was hit")
+    console.log("ADD TRIP in Trips was hit")
     this.setState({
       tripsCount: this.state.tripsCount + 1,
-      addNewTrip: '',
+      newForm: '',
     }, () => getAllTrips()
     .then(trips => {
       this.setState({ trips })
@@ -35,15 +33,15 @@ class Trip extends Component {
    )
   }
 
-  resetNewTrip = () => {
+  newForm = () => {
     this.setState({
-      addNewTrip: '',
+      newForm: this.state.newForm + 1
     })
   }
 
-  addNewTrip = () => {
+  cancelNewForm = () => {
     this.setState({
-      addNewTrip: this.state.addNewTrip + 1
+      newForm: '',
     })
   }
 
@@ -54,32 +52,21 @@ class Trip extends Component {
     })
   }
 
-  resetShowTrip = () => {
+  cancelShow = () => {
     this.setState({
       tripToShow: '',
+    }, () => getAllTrips()
+    .then(trips => {
+      this.setState({ trips })
     })
+   )
   }
-
-//need to get trip's id here and pass it as props to EditTrip:
-  // chosenToEdit = (trip) => {
-  //   console.log(trip)
-  //   this.setState({
-  //     //chosenToEdit: this.state.chosenToEdit + 1,
-  //     tripToEdit: trip,
-  //   })
-  // }
-
-  // finishEdit = (e) => {
-  //   this.setState({
-  //     chosenToEdit: this.state.chosenToEdit - 1
-  //   })
-  // }
 
   render() {
 
   const trips = this.state.trips.map(trip => {
     return (
-      <li key={trip.id} onClick={() => this.showTrip(trip)}>
+      <li key={trip.id} onClick={ () => this.showTrip(trip) }>
         NAME: {trip.name} <br/>
         LOCATION: {trip.location} <br/>
         COUNTRY: {trip.country} <br/>
@@ -97,24 +84,25 @@ class Trip extends Component {
     return (
       <div>
         {
-          this.state.addNewTrip ?
+          this.state.newForm ?
           <NewTripForm
             addTrip={this.addTrip}
-            resetNewTrip={this.resetNewTrip}
+            cancelNewForm={this.cancelNewForm}
           />
         : null
         }
         {
-          this.state.addNewTrip || this.state.tripToShow ?
+          this.state.newForm || this.state.tripToShow ?
           null
-          : <button onClick={this.addNewTrip}>Add New TRIP</button>
+          : <button onClick={this.newForm}>Add New TRIP</button>
         }
         {
           this.state.tripToShow ?
             <ShowTrip
               trip={this.state.tripToShow}
               addTrip={this.addTrip}
-              resetShowTrip={this.resetShowTrip}
+              cancelShow={this.cancelShow}
+              showTrip={this.showTrip}
             />
           :
           <div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { editTrip } from '../adapter/api';
-import { getTrip } from '../adapter/api';
+//import { getTrip } from '../adapter/api';
 
 class EditTrip extends Component{
 
@@ -19,42 +19,16 @@ class EditTrip extends Component{
   handleSubmit = async (e) => {
     e.preventDefault()
     console.log(this.state)
-    await editTrip(this.state)   //PUT pls
-    getTrip(this.state.id)
-      //.then(trip => console.log("PROMISE RESOLVED: ", trip))
-    //this.props.showTrip(getTrip(this.state.id).then())
-    // .then(trips => {
-    //   this.setState({ trips })
-    // })
-    this.setState({
-        name: '',
-        location: '',
-        country: '',
-        things_did: '',
-        date_from: '',
-        date_to: '',
-        notes: '',
-    })
-     //, () => this.props.cancelEdit() )
-    //, () => this.props.showTrip(getTrip()) )
-    //, () => this.props.cancelEdit() )
-    //, () => this.props.addTrip() )  // need this
+    await editTrip(this.state)  // PUT
+    this.props.showTrip(this.state)
+    this.props.cancelEdit()
   }
-  //() => this.props.showTrip(trip)
-  // this.props.cancelEdit
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
   }
-
-  // componentDidUpdate(prevProps) {  // compares before updating
-  //   if (prevProps.trip.id !== this.props.trip.id){
-  //     console.log("Trip I'm editing: ", this.props.trip.id)
-  //     this.getTrip(this.props.trip)
-  //   }
-  // }
 
   componentDidMount() {
     this.getTrip(this.props.trip)

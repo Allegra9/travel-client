@@ -85,30 +85,29 @@ class Trip extends Component {
       <div>
         {
           this.state.newForm ?
-          <NewTripForm
-            addTrip={this.addTrip}
-            cancelNewForm={this.cancelNewForm}
-          />
-        : null
+            <NewTripForm
+              addTrip={this.addTrip}
+              cancelNewForm={this.cancelNewForm}
+            />
+          : null
         }
         {
           this.state.newForm || this.state.tripToShow ?
-          null
+            null
           : <button onClick={this.newForm}>Add New TRIP</button>
         }
         {
           this.state.tripToShow ?
             <ShowTrip
               trip={this.state.tripToShow}
-              addTrip={this.addTrip}
               cancelShow={this.cancelShow}
               showTrip={this.showTrip}
             />
           :
-          <div>
-            <h1>MY TRIPS:</h1>
-            <ul>{trips}</ul>
-          </div>
+            <div>
+              <h1>MY TRIPS:</h1>
+              <ul>{trips}</ul>
+            </div>
         }
       </div>
     )

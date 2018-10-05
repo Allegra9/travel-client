@@ -44,7 +44,6 @@ class ShowTrip extends Component {
           this.state.tripToEdit ?
             <EditTrip
               trip={this.state.tripToEdit}
-              addTrip={this.props.addTrip}
               cancelEdit={this.cancelEdit}
               showTrip={this.props.showTrip}
             />

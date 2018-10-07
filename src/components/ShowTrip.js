@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import EditTrip from './EditTrip'
+import { deleteTrip } from '../adapter/api';
 
 class ShowTrip extends Component {
 
@@ -19,6 +20,11 @@ class ShowTrip extends Component {
     })
   }
 
+  delete = async (trip) => {
+    await deleteTrip(trip)
+    this.props.cancelShow()
+  }
+
   render() {
 
     const { trip } = this.props;
@@ -36,10 +42,8 @@ class ShowTrip extends Component {
           DATE TO: {trip.date_to} <br/>
           USER ID: {trip.user_id} <br/>
           TRIP ID: {trip.id} <br/>
-        <h4 onClick={ () => this.chosenToEdit(trip) }>EDIT</h4>
-        <h4>DELETE</h4>
         </li>
-
+        <br/>
         {
           this.state.tripToEdit ?
             <EditTrip
@@ -47,7 +51,11 @@ class ShowTrip extends Component {
               cancelEdit={this.cancelEdit}
               showTrip={this.props.showTrip}
             />
-          : null
+          :
+            <div>
+              <h4 onClick={ () => this.chosenToEdit(trip) }>EDIT</h4>
+              <h4 onClick={ () => this.delete(trip) }>DELETE</h4>
+            </div>
         }
       </div>
     )

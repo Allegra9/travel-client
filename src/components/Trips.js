@@ -64,22 +64,26 @@ class Trip extends Component {
 
   render() {
 
-  const trips = this.state.trips.map(trip => {
-    return (
-      <li key={trip.id} onClick={ () => this.showTrip(trip) }>
-        NAME: {trip.name} <br/>
-        LOCATION: {trip.location} <br/>
-        COUNTRY: {trip.country} <br/>
-        THINGS DID: {trip.things_did} <br/>
-        NOTES: {trip.notes} <br/>
-        DATE FROM: {trip.date_from} <br/>
-        DATE TO: {trip.date_to} <br/>
-        USER ID: {trip.user_id} <br/>
-        TRIP ID: {trip.id} <br/>
-        <br/>**********<br/>
-      </li>
-    )
-  })
+    const sortedTrips = this.state.trips.sort((a, b) => {
+      return (a.id < b.id) ? 1 : ((b.id < a.id) ? -1 : 0)
+    })
+
+    const trips = sortedTrips.map(trip => {
+      return (
+        <li key={trip.id} onClick={ () => this.showTrip(trip) }>
+          NAME: {trip.name} <br/>
+          LOCATION: {trip.location} <br/>
+          COUNTRY: {trip.country} <br/>
+          THINGS DID: {trip.things_did} <br/>
+          NOTES: {trip.notes} <br/>
+          DATE FROM: {trip.date_from} <br/>
+          DATE TO: {trip.date_to} <br/>
+          USER ID: {trip.user_id} <br/>
+          TRIP ID: {trip.id} <br/>
+          <br/>**********<br/>
+        </li>
+      )
+    })
 
     return (
       <div>

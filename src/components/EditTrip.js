@@ -20,8 +20,25 @@ class EditTrip extends Component{
     e.preventDefault()
     console.log(this.state)
     await editTrip(this.state)  // PUT
-    this.props.showTrip(this.state)
-    this.props.cancelEdit()
+    //.then(res => console.log(res.error))
+    // if (errors){
+    //   console.log("ERR: ", errors)
+    // }
+    .then(res => {
+      if (res.error){
+        console.log("DIDN'T happen")
+        //alert("Name, location and country can't be blank")
+        let p = document.querySelector('p')
+        p.innerText = "Name, location and country can't be blank"
+        p.style.color = 'red'
+        let form = document.querySelector('form')
+        form.prepend(p)
+        return "Errors"
+      } else {
+        this.props.showTrip(this.state)
+        this.props.cancelEdit()
+      }
+    })
   }
 
   handleChange = (e) => {
@@ -54,6 +71,7 @@ class EditTrip extends Component{
 
     return (
       <div>
+        <p></p>
         <form onSubmit={this.handleSubmit} >
           <input type="text" value={this.state.name} name="name"
             onChange={this.handleChange}

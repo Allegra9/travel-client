@@ -23,7 +23,8 @@ export const createTrip = (trip) => {
     method: 'POST',
     headers: HEADERS,
     body: JSON.stringify(trip)
-  })
+  }).then(resp => resp.json())
+  //.then(res => console.log(res))
 }
 
 export const editTrip = (trip) => {
@@ -32,8 +33,8 @@ export const editTrip = (trip) => {
     method: 'PUT',
     headers: HEADERS,
     body: JSON.stringify(trip)
-  })//.then( resp => resp.json() )
-  //.then(x => console.log(x))
+  }).then(resp => resp.json())
+  //.then(res => console.log(res))
 }
 
 export const deleteTrip = (trip) => {

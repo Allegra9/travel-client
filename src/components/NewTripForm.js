@@ -18,15 +18,28 @@ class NewTripForm extends Component{
     e.preventDefault()
     console.log(this.state)
     createTrip(this.state)
-    this.setState({
-        name: '',
-        location: '',
-        country: '',
-        things_did: '',
-        date_from: '',
-        date_to: '',
-        notes: '',
-    }, () => this.props.addTrip() )
+    .then(res => {
+      if (!res.id){
+        console.log("DIDN'T happen")
+        //alert("Name, location and country can't be blank")
+        let p = document.querySelector('p')
+        p.innerText = "Name, location and country can't be blank"
+        p.style.color = 'red'
+        let form = document.querySelector('form')
+        form.prepend(p)
+        return "Errors"
+      }else {
+        this.setState({
+            name: '',
+            location: '',
+            country: '',
+            things_did: '',
+            date_from: '',
+            date_to: '',
+            notes: '',
+        }, () => this.props.addTrip() )
+      }
+    })
   }
 
   handleChange = (e) => {
@@ -39,6 +52,7 @@ class NewTripForm extends Component{
     return (
       <div>
         NEW TRIP:
+        <p></p>
         <form onSubmit={this.handleSubmit} >
           <input type="text" value={this.state.name} name="name"
             onChange={this.handleChange}

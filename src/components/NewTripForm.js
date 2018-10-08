@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { createTrip } from '../adapter/api';
+import Select from 'react-select';
+import Calendar from 'react-calendar'
+
+const worldCountries = require("world-countries")
+//console.log(worldCountries[124].name.common) //make obj
 
 class NewTripForm extends Component{
 
@@ -23,7 +28,7 @@ class NewTripForm extends Component{
         console.log("DIDN'T happen")
         //alert("Name, location and country can't be blank")
         let p = document.querySelector('p')
-        p.innerText = "Name, location and country can't be blank"
+        p.innerText = "Name, location, country and dates can't be blank"
         p.style.color = 'red'
         let form = document.querySelector('form')
         form.prepend(p)
@@ -48,41 +53,96 @@ class NewTripForm extends Component{
     })
   }
 
+  onFromDateChange = (date) => {     //object to string
+    date = JSON.stringify(date).slice(1,11) // 2018-10-24
+    this.setState({ date_from: date})
+  }
+
+  onToDateChange = (date) => {
+    date = JSON.stringify(date).slice(1,11)
+    this.setState({ date_to: date})
+  }
+
+  handleCountryOption = (selectedOption) => {    // added
+    //console.log(Object.values(selectedOption)[0])
+    this.setState({
+      country: Object.values(selectedOption)[0]
+    })
+  }
+
+  getCountriesObj = () => {
+    let selectOptions = []
+    worldCountries.forEach(country => {
+      let obj = {}
+      obj['value'] = country.name.common, obj['label'] = country.name.common
+      selectOptions = [...selectOptions, obj]
+    })
+    return selectOptions
+  }
+  //[ { value: 'France', label: 'France' }, {...} ]
+
   render() {
+
+    const {
+      name,
+      location,
+      country,
+      things_did,
+      notes,
+      date_from,
+      date_to
+    } = this.state;
+
     return (
       <div>
         NEW TRIP:
         <p></p>
         <form onSubmit={this.handleSubmit} >
-          <input type="text" value={this.state.name} name="name"
+          TRIP NAME:
+          <input type="text" value={name} name="name"
             onChange={this.handleChange}
             placeholder="Trip name"
           /> <br/>
-        <input type="text" value={this.state.location} name="location"
+
+          LOCATION:
+          <input type="text" value={location} name="location"
             onChange={this.handleChange}
             placeholder="Location"
           /> <br/>
-        <input type="text" value={this.state.country} name="country"
-            onChange={this.handleChange}
-            placeholder="Country"
-          /> <br/>
-        <input type="text" value={this.state.things_did} name="things_did"
+
+          COUNTRY:
+          <Select
+            onChange={this.handleCountryOption}
+            options={this.getCountriesObj()}
+            placeholder='Select a country...'
+            isSearchable={true}
+          />
+
+          THINGS DID:
+          <input type="text" value={things_did} name="things_did"
             onChange={this.handleChange}
             placeholder="Things did"
           /> <br/>
-        <input type="text" value={this.state.notes} name="notes"
+
+          NOTES:
+          <input type="text" value={notes} name="notes"
             onChange={this.handleChange}
             placeholder="Notes"
           /> <br/>
-        <input type="text" value={this.state.date_from} name="date_from"
-            onChange={this.handleChange}
-            placeholder="date from"
-          /> <br/>
-        <input type="text" value={this.state.date_to} name="date_to"
-            onChange={this.handleChange}
-            placeholder="date to"
-          /> <br/>
-        <input type="submit" value="Submit" />
+
+          DATE FROM:
+          <Calendar
+            onChange={this.onFromDateChange}
+            value={this.state.date}
+          />
+
+          DATE TO:
+          <Calendar
+            onChange={this.onToDateChange}
+            value={this.state.date}
+          />
+
+          <input type="submit" value="Submit" />
         </form>
         <h4 onClick={this.props.cancelNewForm}>cancel</h4>
       </div>

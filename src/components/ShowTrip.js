@@ -38,8 +38,8 @@ class ShowTrip extends Component {
           COUNTRY: {trip.country} <br/>
           THINGS DID: {trip.things_did} <br/>
           NOTES: {trip.notes} <br/>
-          DATE FROM: {trip.date_from} <br/>
-          DATE TO: {trip.date_to} <br/>
+          DATE FROM: {trip.date_from.slice(0,10)} <br/>
+          DATE TO: {trip.date_to.slice(0,10)} <br/>
           USER ID: {trip.user_id} <br/>
           TRIP ID: {trip.id} <br/>
         </li>

@@ -29,7 +29,7 @@ class EditTrip extends Component{
         console.log("DIDN'T happen")
         //alert("Name, location and country can't be blank")
         let p = document.querySelector('p')
-        p.innerText = "Name, location and country can't be blank"
+        p.innerText = "Name, location, country and dates can't be blank"
         p.style.color = 'red'
         let form = document.querySelector('form')
         form.prepend(p)

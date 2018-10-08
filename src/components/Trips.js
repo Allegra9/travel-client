@@ -69,6 +69,7 @@ class Trip extends Component {
     })
 
     const trips = sortedTrips.map(trip => {
+      //console.log(trip.date_from.slice(0,10))
       return (
         <li key={trip.id} onClick={ () => this.showTrip(trip) }>
           NAME: {trip.name} <br/>
@@ -76,8 +77,8 @@ class Trip extends Component {
           COUNTRY: {trip.country} <br/>
           THINGS DID: {trip.things_did} <br/>
           NOTES: {trip.notes} <br/>
-          DATE FROM: {trip.date_from} <br/>
-          DATE TO: {trip.date_to} <br/>
+          DATE FROM: {trip.date_from.slice(0,10)} <br/>
+          DATE TO: {trip.date_to.slice(0,10)} <br/>
           USER ID: {trip.user_id} <br/>
           TRIP ID: {trip.id} <br/>
           <br/>**********<br/>

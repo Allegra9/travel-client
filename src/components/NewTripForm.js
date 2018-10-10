@@ -17,18 +17,21 @@ class NewTripForm extends Component{
     date_from: '',
     date_to: '',
     notes: '',
+
+    clicked: false,
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
     console.log(this.state)
+    console.log("DATE COMPARISON: ", this.state.date_from < this.state.date_to)
     createTrip(this.state)
     .then(res => {
       if (!res.id){
         console.log("DIDN'T happen")
         //alert("Name, location and country can't be blank")
         let p = document.querySelector('p')
-        p.innerText = "Name, location, country and dates can't be blank"
+        p.innerText = "Name, location, country and dates must be valid"
         p.style.color = 'red'
         let form = document.querySelector('form')
         form.prepend(p)
@@ -60,7 +63,15 @@ class NewTripForm extends Component{
 
   onToDateChange = (date) => {
     date = JSON.stringify(date).slice(1,11)
-    this.setState({ date_to: date})
+    if (this.state.date_from < date) {
+      this.setState({ date_to: date})
+    }else {
+      console.log("DATE IS NOT VALID")
+    }
+  }
+
+  toggleCalendar = () => {
+    this.setState({ clicked: !this.state.clicked })
   }
 
   handleCountryOption = (selectedOption) => {    // added
@@ -130,17 +141,23 @@ class NewTripForm extends Component{
             placeholder="Notes"
           /> <br/>
 
-          DATE FROM:
-          <Calendar
-            onChange={this.onFromDateChange}
-            value={this.state.date}
-          />
+          {
+            this.state.clicked ?
+              <div>
+                DATE FROM:
+                <Calendar
+                  onChange={this.onFromDateChange}
+                  value={this.state.date}
+                />
 
-          DATE TO:
-          <Calendar
-            onChange={this.onToDateChange}
-            value={this.state.date}
-          />
+                DATE TO:
+                <Calendar
+                  onChange={this.onToDateChange}
+                  value={this.state.date}
+                />
+              </div>
+            : <button onClick={this.toggleCalendar}>Click to choose dates</button>
+          }
 
           <input type="submit" value="Submit" />
         </form>

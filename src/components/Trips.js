@@ -65,7 +65,7 @@ class Trip extends Component {
   render() {
 
     const sortedTrips = this.state.trips.sort((a, b) => {
-      return (a.id < b.id) ? 1 : ((b.id < a.id) ? -1 : 0)
+      return (a.date_from < b.date_from) ? 1 : ((b.date_from < a.date_from) ? -1 : 0)
     })
 
     const trips = sortedTrips.map(trip => {

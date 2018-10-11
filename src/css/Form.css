@@ -1,0 +1,60 @@
+.form {
+  border: 1px solid #000;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.form-field {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  display: block;
+}
+
+input {
+  margin-left: 8px;
+  padding: 10px;
+  width: 40%;
+}
+
+.country {
+  display: inline-block;
+  margin-left: 8px;
+  width: 40%;
+}
+
+.calendarBtn {
+  padding: 10px;
+  width: 20%;
+  border-radius: 10px;
+}
+
+.date {
+  display: inline-block;
+  width: 30%;
+  margin: 10px;
+}
+
+.react-calendar__navigation{
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.react-calendar {
+  border-radius: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.submitBtn {
+  margin-bottom: 20px;
+  width: 30%;
+}
+
+.cancelBtn {
+  font-weight: 600;
+}

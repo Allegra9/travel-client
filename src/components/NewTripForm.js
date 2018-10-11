@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createTrip } from '../adapter/api';
 import Select from 'react-select';
 import Calendar from 'react-calendar'
+import '../css/Form.css';
 
 const worldCountries = require("world-countries")
 //console.log(worldCountries[124].name.common) //make obj
@@ -105,63 +106,90 @@ class NewTripForm extends Component{
     } = this.state;
 
     return (
-      <div>
-        NEW TRIP:
+      <div className="form">
+        <h3>NEW TRIP:</h3>
         <p></p>
         <form onSubmit={this.handleSubmit} >
-          TRIP NAME:
-          <input type="text" value={name} name="name"
-            onChange={this.handleChange}
-            placeholder="Trip name"
-          /> <br/>
 
-          LOCATION:
-          <input type="text" value={location} name="location"
-            onChange={this.handleChange}
-            placeholder="Location"
-          /> <br/>
+          {/*
+          EXAMPLE:
+          // <label className="form-field" htmlFor="email">
+          //   <span>E-mail:</span>
+          //   <input name="email" type="email" onChange={handleChange} />
+          // </label>
+          // <div className="form-field-error">{errors.email}</div>
+          */}
 
-          COUNTRY:
-          <Select
-            onChange={this.handleCountryOption}
-            options={this.getCountriesObj()}
-            placeholder='Select a country...'
-            isSearchable={true}
-          />
+          <label className="form-field" htmlFor="trip name">
+            <span>Trip name:</span>
+            <input type="text" value={name} name="name"
+              onChange={this.handleChange}
+              placeholder="Birthday weekend"
+            /> <br/>
+          </label>
 
-          THINGS DID:
-          <input type="text" value={things_did} name="things_did"
-            onChange={this.handleChange}
-            placeholder="Things did"
-          /> <br/>
+          <label className="form-field" htmlFor="location">
+            <span>Location:</span>
+            <input type="text" value={location} name="location"
+              onChange={this.handleChange}
+              placeholder="Amalfi Coast"
+            /> <br/>
+          </label>
 
-          NOTES:
-          <input type="text" value={notes} name="notes"
-            onChange={this.handleChange}
-            placeholder="Notes"
-          /> <br/>
+          <label className="form-field" htmlFor="country">
+            <span>Country:</span>
+            <span class="country">
+            <Select
+              onChange={this.handleCountryOption}
+              options={this.getCountriesObj()}
+              placeholder='Select a country...'
+              isSearchable={true}
+            />
+            </span>
+          </label>
+
+          <label className="form-field" htmlFor="things did">
+            <span>Things did:</span>
+            <input type="text" value={things_did} name="things_did"
+              onChange={this.handleChange}
+              placeholder="Swimming, tanning, hiking, road trips..."
+            /> <br/>
+          </label>
+
+          <label className="form-field" htmlFor="notes">
+            <span>Notes:</span>
+            <input type="text" value={notes} name="notes"
+              onChange={this.handleChange}
+              placeholder="Met Jupiter and Salma from Wknd!"
+            /> <br/>
+          </label>
 
           {
             this.state.clicked ?
               <div>
-                DATE FROM:
-                <Calendar
-                  onChange={this.onFromDateChange}
-                  value={this.state.date}
-                />
+                <h3>Date from - date to:</h3>
 
-                DATE TO:
-                <Calendar
-                  onChange={this.onToDateChange}
-                  value={this.state.date}
-                />
+                <span class="date">
+                  <Calendar
+                    onChange={this.onFromDateChange}
+                    value={this.state.date}
+                  />
+                </span>
+
+                <span class="date">
+                  <Calendar
+                    onChange={this.onToDateChange}
+                    value={this.state.date}
+                  />
+                </span>
               </div>
-            : <button onClick={this.toggleCalendar}>Click to choose dates</button>
+            : <button className="calendarBtn" onClick={this.toggleCalendar}>CALENDAR</button>
           }
+        <br/><br/>
 
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" class="btn btn-primary submitBtn"/>
         </form>
-        <h4 onClick={this.props.cancelNewForm}>cancel</h4>
+        <button onClick={this.props.cancelNewForm} class="btn btn-light cancelBtn">cancel</button>
       </div>
     )
   }

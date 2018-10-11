@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { createTrip } from '../adapter/api';
-import Select from 'react-select';
+import React, { Component } from 'react'
+import { createTrip } from '../adapter/api'
+import Select from 'react-select'
 import Calendar from 'react-calendar'
-import '../css/Form.css';
+import '../css/Form.css'
 
 const worldCountries = require("world-countries")
 //console.log(worldCountries[124].name.common) //make obj

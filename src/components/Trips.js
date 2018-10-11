@@ -6,6 +6,9 @@ import ShowTrip from './ShowTrip'
 
 import '../css/Timeline.css';
 
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+'August', 'September', 'October', 'November', 'December'];
+
 class Trip extends Component {
 
   state={
@@ -77,7 +80,28 @@ class Trip extends Component {
           <div class="timeline-img"></div>
           <div class='timeline-content'>
             <h3>{trip.name}</h3>
-            <div class='date'>{trip.date_from.slice(0,7)} to {trip.date_to.slice(0,7)}</div>
+
+            {
+              trip.date_from.slice(0,4) === trip.date_to.slice(0,4) ?
+
+                months[trip.date_from.slice(5,7)-1] === months[trip.date_to.slice(5,7)-1] ?
+
+                  <div class='date'>
+                    {months[trip.date_from.slice(5,7)-1]} {trip.date_from.slice(0,4)}
+                  </div>
+                :
+                  <div class='date'>
+                    {months[trip.date_from.slice(5,7)-1]} - {months[trip.date_to.slice(5,7)-1]} {trip.date_from.slice(0,4)}
+                  </div>
+
+              :
+                <div class='date'>
+                  {months[trip.date_from.slice(5,7)-1]} {trip.date_from.slice(0,4)}
+                  { } - { }
+                  {months[trip.date_to.slice(5,7)-1]} {trip.date_to.slice(0,4)}
+                </div>
+            }
+
             <p>{trip.location}, {trip.country.toUpperCase()}</p>
             <a class='btn-info' onClick={() => this.showTrip(trip)}>show</a>
           </div>

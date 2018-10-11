@@ -99,7 +99,7 @@ header p {
   top: 30px;
   right: -15px;
   border-width: 10px 0 10px 15px;
-  border-color: transparent transparent transparent #f5f5f5;
+  border-color: transparent transparent transparent #7de0f2;
 }
 
 .timeline-img {
@@ -189,7 +189,7 @@ blockquote {
   background: #FF4081;
   display: inline-block;
   color: #FFFFFF;
-  padding: 10px;
+  padding: 8px 20px;
   position: absolute;
   top: 0;
   right: 0;

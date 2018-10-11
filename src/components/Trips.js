@@ -4,6 +4,8 @@ import { getAllTrips } from '../adapter/api'
 import NewTripForm from './NewTripForm'
 import ShowTrip from './ShowTrip'
 
+import '../css/Timeline.css';
+
 class Trip extends Component {
 
   state={
@@ -69,20 +71,17 @@ class Trip extends Component {
     })
 
     const trips = sortedTrips.map(trip => {
-      //console.log(trip.date_from.slice(0,10))
+      //console.log(trip.date_from.slice(0,10))   to get the full date
       return (
-        <li key={trip.id} onClick={ () => this.showTrip(trip) }>
-          NAME: {trip.name} <br/>
-          LOCATION: {trip.location} <br/>
-          COUNTRY: {trip.country} <br/>
-          THINGS DID: {trip.things_did} <br/>
-          NOTES: {trip.notes} <br/>
-          DATE FROM: {trip.date_from.slice(0,10)} <br/>
-          DATE TO: {trip.date_to.slice(0,10)} <br/>
-          USER ID: {trip.user_id} <br/>
-          TRIP ID: {trip.id} <br/>
-          <br/>**********<br/>
-        </li>
+        <div class='timeline-item' key={trip.id}>
+          <div class="timeline-img"></div>
+          <div class='timeline-content'>
+            <h3>{trip.name}</h3>
+            <div class='date'>{trip.date_from.slice(0,7)} to {trip.date_to.slice(0,7)}</div>
+            <p>{trip.location}, {trip.country.toUpperCase()}</p>
+            <a class='btn-info' onClick={() => this.showTrip(trip)}>show</a>
+          </div>
+        </div>
       )
     })
 
@@ -111,7 +110,11 @@ class Trip extends Component {
           :
             <div>
               <h1>MY TRIPS:</h1>
-              <ul>{trips}</ul>
+              <section class='timeline'>
+                <div class='container'>
+                  {trips}
+                </div>
+              </section>
             </div>
         }
       </div>

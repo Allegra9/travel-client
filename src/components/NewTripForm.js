@@ -169,14 +169,14 @@ class NewTripForm extends Component{
               <div>
                 <h3>Date from - date to:</h3>
 
-                <span class="date">
+                <span class="calendar">
                   <Calendar
                     onChange={this.onFromDateChange}
                     value={this.state.date}
                   />
                 </span>
 
-                <span class="date">
+                <span class="calendar">
                   <Calendar
                     onChange={this.onToDateChange}
                     value={this.state.date}
@@ -187,7 +187,7 @@ class NewTripForm extends Component{
           }
         <br/><br/>
 
-          <input type="submit" value="Submit" class="btn btn-primary submitBtn"/>
+          <input type="submit" value="SUBMIT" class="btn btn-info submitBtn"/>
         </form>
         <button onClick={this.props.cancelNewForm} class="btn btn-light cancelBtn">cancel</button>
       </div>

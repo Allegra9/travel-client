@@ -76,9 +76,9 @@ class Trip extends Component {
     const trips = sortedTrips.map(trip => {
       //console.log(trip.date_from.slice(0,10))   to get the full date
       return (
-        <div class='timeline-item' key={trip.id}>
-          <div class="timeline-img"></div>
-          <div class='timeline-content'>
+        <div className='timeline-item' key={trip.id}>
+          <div className="timeline-img"></div>
+          <div className='timeline-content'>
             <h3>{trip.name}</h3>
 
             {
@@ -86,16 +86,16 @@ class Trip extends Component {
 
                 months[trip.date_from.slice(5,7)-1] === months[trip.date_to.slice(5,7)-1] ?
 
-                  <div class='date'>
+                  <div className='date'>
                     {months[trip.date_from.slice(5,7)-1]} {trip.date_from.slice(0,4)}
                   </div>
                 :
-                  <div class='date'>
+                  <div className='date'>
                     {months[trip.date_from.slice(5,7)-1]} - {months[trip.date_to.slice(5,7)-1]} {trip.date_from.slice(0,4)}
                   </div>
 
               :
-                <div class='date'>
+                <div className='date'>
                   {months[trip.date_from.slice(5,7)-1]} {trip.date_from.slice(0,4)}
                   { } - { }
                   {months[trip.date_to.slice(5,7)-1]} {trip.date_to.slice(0,4)}
@@ -103,7 +103,7 @@ class Trip extends Component {
             }
 
             <p>{trip.location}, {trip.country.toUpperCase()}</p>
-            <a class='btn-info' onClick={() => this.showTrip(trip)}>show</a>
+            <a className='btn-info' onClick={() => this.showTrip(trip)}>show</a>
           </div>
         </div>
       )
@@ -134,8 +134,8 @@ class Trip extends Component {
           :
             <div>
               <h1>MY TRIPS:</h1>
-              <section class='timeline'>
-                <div class='container'>
+              <section className='timeline'>
+                <div className='container'>
                   {trips}
                 </div>
               </section>

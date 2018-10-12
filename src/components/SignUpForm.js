@@ -16,7 +16,7 @@ class SignUpForm extends Component {
     });
   }
 
-  submituserRegistrationForm = (e) => {
+  submitForm = (e) => {
     e.preventDefault()
     if (this.validateForm()) {
       let fields = {}
@@ -65,7 +65,7 @@ class SignUpForm extends Component {
     }
 
     if (typeof fields['password'] !== 'undefined') {
-      if (!fields['password'].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
+      if (!fields['password'].match(/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,}).*$/)) {
         formIsValid = false
         errors['password'] = '*Please enter secure and strong password'
       }
@@ -86,7 +86,7 @@ class SignUpForm extends Component {
       <div id='main-registration-container'>
         <div id='register'>
           <h3>Sign up</h3>
-          <form method='post'  name='userRegistrationForm' onSubmit={this.submituserRegistrationForm} >
+          <form onSubmit={this.submitForm} >
             <label>Username:
               <input type='text' name='username' value={username} onChange={this.handleChange} />
             </label>

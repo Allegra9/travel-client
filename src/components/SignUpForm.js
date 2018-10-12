@@ -13,18 +13,19 @@ class SignUpForm extends Component {
     fields[e.target.name] = e.target.value
     this.setState({
       fields
-    });
+    }, console.log(this.state.fields.username) )
   }
 
-  submitForm = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault()
+    console.log(this.state.fields)
     if (this.validateForm()) {
       let fields = {}
       fields['username'] = ''
       fields['email'] = ''
       fields['password'] = ''
       this.setState({ fields:fields })
-      alert('Form submitted')
+      alert('Form submitted', this.state.fields)
     }
   }
 
@@ -86,7 +87,7 @@ class SignUpForm extends Component {
       <div id='main-registration-container'>
         <div id='register'>
           <h3>Sign up</h3>
-          <form onSubmit={this.submitForm} >
+          <form onSubmit={this.handleSubmit} >
             <label>Username:
               <input type='text' name='username' value={username} onChange={this.handleChange} />
             </label>

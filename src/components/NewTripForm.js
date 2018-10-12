@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { createTrip } from '../adapter/api'
+import worldCountries from 'world-countries'
 import Select from 'react-select'
 import Calendar from 'react-calendar'
 import '../css/Form.css'
-
-const worldCountries = require("world-countries")
-//console.log(worldCountries[124].name.common) //make obj
 
 class NewTripForm extends Component{
 
@@ -185,8 +183,7 @@ class NewTripForm extends Component{
               </div>
             : <button className="calendarBtn" onClick={this.toggleCalendar}>CALENDAR</button>
           }
-        <br/><br/>
-
+          <br/><br/>
           <input type="submit" value="SUBMIT" className="btn btn-info submitBtn"/>
         </form>
         <button onClick={this.props.cancelNewForm} className="btn btn-light cancelBtn">cancel</button>

@@ -24,8 +24,17 @@ class SignUpForm extends Component {
       createUser(this.state)
       .then(res => {
         if(res.error) {
+          let errors = {}
           console.log("Response", res)
           console.log("Res ERR:", res.error)
+          if (res.error === "*Username already exists"){
+            errors['username'] = res.error
+          }else {
+            errors['email'] = res.error
+          }
+          this.setState({
+            errors: errors
+          })
         }else {
           console.log("USER SUCCESSFULLY CREATED")
           //this.props.handleLogin(res)

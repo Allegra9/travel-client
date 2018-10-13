@@ -13,40 +13,43 @@ class NewTripForm extends Component{
     location: '',
     country: '',
     things_did: '',
+    notes: '',
     date_from: '',
     date_to: '',
-    notes: '',
 
+    errors: {},
     clicked: false,
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state)
-    console.log("DATE COMPARISON: ", this.state.date_from < this.state.date_to)
-    createTrip(this.state)
-    .then(res => {
-      if (!res.id){
-        console.log("DIDN'T happen")
-        //alert("Name, location and country can't be blank")
-        let p = document.querySelector('p')
-        p.innerText = "Name, location, country and dates must be valid"
-        p.style.color = 'red'
-        let form = document.querySelector('form')
-        form.prepend(p)
-        return "Errors"
-      }else {
-        this.setState({
-            name: '',
-            location: '',
-            country: '',
-            things_did: '',
-            date_from: '',
-            date_to: '',
-            notes: '',
-        }, () => this.props.addTrip() )
-      }
-    })
+    if (this.validateForm()) {
+      console.log(this.state)
+      console.log("DATE COMPARISON: ", this.state.date_from < this.state.date_to)
+      createTrip(this.state)
+      .then(res => {
+        if (!res.id){
+          console.log("DIDN'T happen server side")
+          //alert("Name, location and country can't be blank")
+          // let p = document.querySelector('p')
+          // p.innerText = "Name, location, country and dates must be valid"
+          // p.style.color = 'red'
+          // let form = document.querySelector('form')
+          // form.prepend(p)
+          // return
+        }else {
+          this.setState({
+              name: '',
+              location: '',
+              country: '',
+              things_did: '',
+              notes: '',
+              date_from: '',
+              date_to: '',
+          }, () => this.props.addTrip() )
+        }
+      })
+    }
   }
 
   handleChange = (e) => {
@@ -55,22 +58,22 @@ class NewTripForm extends Component{
     })
   }
 
+  toggleCalendar = () => {
+    this.setState({ clicked: !this.state.clicked })
+  }
+
   onFromDateChange = (date) => {     //object to string
     date = JSON.stringify(date).slice(1,11) // 2018-10-24
-    this.setState({ date_from: date})
+    this.setState({ date_from: date })
   }
 
   onToDateChange = (date) => {
     date = JSON.stringify(date).slice(1,11)
-    if (this.state.date_from < date) {
+    if (this.state.date_from <= date) {
       this.setState({ date_to: date})
     }else {
-      console.log("DATE IS NOT VALID")
+      alert("*Dates must be valid!")
     }
-  }
-
-  toggleCalendar = () => {
-    this.setState({ clicked: !this.state.clicked })
   }
 
   handleCountryOption = (selectedOption) => {    // added
@@ -91,6 +94,42 @@ class NewTripForm extends Component{
   }
   //[ { value: 'France', label: 'France' }, {...} ]
 
+  validateForm = () => {
+    let errors = {}
+    let formIsValid = true
+
+    if (!this.state.name) {
+      formIsValid = false
+      errors['name'] = '*Please enter a trip name'
+    }
+
+    if (!this.state.location) {
+      formIsValid = false
+      errors['location'] = '*Please enter a trip location'
+    }
+
+    if (!this.state.country) {
+      formIsValid = false
+      errors['country'] = '*Please select a country'
+    }
+
+    if (!this.state.date_from && !this.state.date_to) {
+      formIsValid = false
+      errors['openCalendar'] = '*Click on Calendar to select trip dates'
+    }
+
+    if (!this.state.date_from || !this.state.date_to) {
+      formIsValid = false
+      errors['selectDates'] = '*Please select trip dates'
+    }
+
+    this.setState({
+      errors: errors
+    })
+
+    return formIsValid
+  }
+
   render() {
 
     const {
@@ -101,7 +140,7 @@ class NewTripForm extends Component{
       notes,
       date_from,
       date_to
-    } = this.state;
+    } = this.state
 
     return (
       <div className="form">
@@ -120,19 +159,27 @@ class NewTripForm extends Component{
 
           <label className="form-field" htmlFor="trip name">
             <span>Trip name:</span>
-            <input type="text" value={name} name="name"
+            <input
+              type="text"
+              value={name}
+              name="name"
               onChange={this.handleChange}
               placeholder="Birthday weekend"
-            /> <br/>
+            />
           </label>
+          <div className='errorMsg'>{this.state.errors.name}</div>
 
           <label className="form-field" htmlFor="location">
             <span>Location:</span>
-            <input type="text" value={location} name="location"
+            <input
+              type="text"
+              value={location}
+              name="location"
               onChange={this.handleChange}
               placeholder="Amalfi Coast"
-            /> <br/>
+            />
           </label>
+          <div className='errorMsg'>{this.state.errors.location}</div>
 
           <label className="form-field" htmlFor="country">
             <span>Country:</span>
@@ -145,21 +192,28 @@ class NewTripForm extends Component{
             />
             </span>
           </label>
+          <div className='errorMsg'>{this.state.errors.country}</div>
 
           <label className="form-field" htmlFor="things did">
             <span>Things did:</span>
-            <input type="text" value={things_did} name="things_did"
+            <input
+              type="text"
+              value={things_did}
+              name="things_did"
               onChange={this.handleChange}
               placeholder="Swimming, tanning, hiking, road trips..."
-            /> <br/>
+            />
           </label>
 
           <label className="form-field" htmlFor="notes">
             <span>Notes:</span>
-            <input type="text" value={notes} name="notes"
+            <input
+              type="text"
+              value={notes}
+              name="notes"
               onChange={this.handleChange}
               placeholder="Met Jupiter and Salma from Wknd!"
-            /> <br/>
+            />
           </label>
 
           {
@@ -180,10 +234,14 @@ class NewTripForm extends Component{
                     value={this.state.date}
                   />
                 </span>
+                <div className='errorMsg'>{this.state.errors.selectDates}</div>
               </div>
-            : <button className="calendarBtn" onClick={this.toggleCalendar}>CALENDAR</button>
+            :
+              <div>
+                <button className="calendarBtn" onClick={this.toggleCalendar}>CALENDAR</button>
+                <div className='errorMsg'>{this.state.errors.openCalendar}</div>
+              </div>
           }
-          <br/><br/>
           <input type="submit" value="SUBMIT" className="btn btn-info submitBtn"/>
         </form>
         <button onClick={this.props.cancelNewForm} className="btn btn-light cancelBtn">cancel</button>

@@ -6,6 +6,7 @@ const HEADERS = {
   //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS'
 };
 
+//TRIPS:
 export const getAllTrips = () => {
   return fetch(`${API_ROOT}/trips`)
     .then(res => res.json())
@@ -42,4 +43,15 @@ export const deleteTrip = (trip) => {
   return fetch(`${API_ROOT}/trips/${trip.id}`, {
     method: 'DELETE',
   })
+}
+
+//USER:
+export const createUser = (user) => {
+  console.log("API:", user)
+  return fetch(`${API_ROOT}/users`, {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify(user)
+  })
+  .then(res => res.json())
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../css/SignUpForm.css'
+import { createUser } from '../adapter/api'
 
 class SignUpForm extends Component {
 
@@ -20,6 +21,16 @@ class SignUpForm extends Component {
     e.preventDefault()
     if (this.validateForm()) {
       console.log(this.state)
+      createUser(this.state)
+      .then(res => {
+        if(res.error) {
+          console.log("Response", res)
+          console.log("Res ERR:", res.error)
+        }else {
+          console.log("USER SUCCESSFULLY CREATED")
+          //this.props.handleLogin(res)
+        }
+      })
     }
   }
 

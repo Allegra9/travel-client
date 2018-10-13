@@ -135,11 +135,8 @@ class NewTripForm extends Component{
     const {
       name,
       location,
-      country,
       things_did,
       notes,
-      date_from,
-      date_to
     } = this.state
 
     return (

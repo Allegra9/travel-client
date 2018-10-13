@@ -4,69 +4,62 @@ import '../css/SignUpForm.css'
 class SignUpForm extends Component {
 
   state = {
-    fields: {},
+    username: '',
+    email: '',
+    password: '',
     errors: {},
   }
 
   handleChange = (e) => {
-    let fields = this.state.fields
-    fields[e.target.name] = e.target.value
     this.setState({
-      fields
-    }, console.log(this.state.fields.username) )
+      [e.target.name]: e.target.value
+    })
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state.fields)
     if (this.validateForm()) {
-      let fields = {}
-      fields['username'] = ''
-      fields['email'] = ''
-      fields['password'] = ''
-      this.setState({ fields:fields })
-      alert('Form submitted', this.state.fields)
+      console.log(this.state)
     }
   }
 
   validateForm = () => {
-    let fields = this.state.fields
     let errors = {}
     let formIsValid = true
 
-    if (!fields['username']) {
+    if (!this.state.username) {
       formIsValid = false
       errors['username'] = '*Please enter your username'
     }
 
-    if (typeof fields['username'] !== 'undefined') {
-      if (!fields['username'].match(/^[a-zA-Z ]*$/)) {
+    if (this.state.username) {
+      if (!this.state.username.match(/^\w+$/)) {
         formIsValid = false
-        errors['username'] = '*Please enter alphabet characters only'
+        errors['username'] = '*Please use alphanumeric characters only'
       }
     }
 
-    if (!fields['email']) {
+    if (!this.state.email) {
       formIsValid = false
       errors['email'] = '*Please enter your email'
     }
 
-    if (typeof fields['email'] !== 'undefined') {
+    if (this.state.email) {
       //regular expression for email validation
       let pattern = new RegExp(/^(('[\w-\s]+')|([\w-]+(?:\.[\w-]+)*)|('[\w-\s]+')([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-      if (!pattern.test(fields['email'])) {
+      if (!pattern.test(this.state.email)) {
         formIsValid = false
         errors['email'] = '*Please enter valid email'
       }
     }
 
-    if (!fields['password']) {
+    if (!this.state.password) {
       formIsValid = false
       errors['password'] = '*Please enter your password'
     }
 
-    if (typeof fields['password'] !== 'undefined') {
-      if (!fields['password'].match(/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,}).*$/)) {
+    if (this.state.password) {
+      if (!this.state.password.match(/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,}).*$/)) {
         formIsValid = false
         errors['password'] = '*Please enter secure and strong password'
       }
@@ -84,25 +77,40 @@ class SignUpForm extends Component {
     const { username, email, password } = this.state
 
     return (
-      <div id='main-registration-container'>
-        <div id='register'>
-          <h3>Sign up</h3>
-          <form onSubmit={this.handleSubmit} >
-            <label>Username:
-              <input type='text' name='username' value={username} onChange={this.handleChange} />
-            </label>
-            <div className='errorMsg'>{this.state.errors.username}</div>
-            <label>Email:
-              <input type='text' name='email' value={email} onChange={this.handleChange} />
-            </label>
-            <div className='errorMsg'>{this.state.errors.email}</div>
-            <label>Password:
-              <input type='password' name='password' value={password} onChange={this.handleChange} />
-            </label>
-            <div className='errorMsg'>{this.state.errors.password}</div>
-            <input type='submit' className='button' value='Sign Up'/>
-          </form>
-        </div>
+      <div id='signUp'>
+        <h3>Sign up</h3>
+        <form onSubmit={this.handleSubmit} >
+          <label>Username:
+            <input
+              type='text'
+              name='username'
+              value={username}
+              onChange={this.handleChange}
+            />
+          </label>
+          <div className='errorMsg'>{this.state.errors.username}</div>
+
+          <label>Email:
+            <input
+              type='email'
+              name='email'
+              value={email}
+              onChange={this.handleChange}
+            />
+          </label>
+          <div className='errorMsg'>{this.state.errors.email}</div>
+
+          <label>Password:
+            <input
+              type='password'
+              name='password'
+              value={password}
+              onChange={this.handleChange}
+            />
+          </label>
+          <div className='errorMsg'>{this.state.errors.password}</div>
+          <input type='submit' className='button' value='Sign Up'/>
+        </form>
       </div>
     )
   }

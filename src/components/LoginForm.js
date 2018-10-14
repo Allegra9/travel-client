@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import '../css/SignUpForm.css'
-import { createUser } from '../adapter/api'
+//import { createUser } from '../adapter/api'
 
-class SignUpForm extends Component {
+class LoginForm extends Component {
 
   state = {
-    username: '',
     email: '',
     password: '',
     errors: {},
@@ -21,43 +20,31 @@ class SignUpForm extends Component {
     e.preventDefault()
     if (this.validateForm()) {
       console.log(this.state)
-      createUser(this.state)
-      .then(res => {
-        if(res.error) {
-          let errors = {}
-          console.log("Response", res)
-          console.log("Res ERR:", res.error)
-          if (res.error === "*Username already exists"){
-            errors['username'] = res.error
-          }else {
-            errors['email'] = res.error
-          }
-          this.setState({
-            errors: errors
-          })
-        }else {
-          console.log("USER SUCCESSFULLY CREATED")
-          //this.props.handleLogin(res)
-        }
-      })
+      // createUser(this.state)
+      // .then(res => {
+      //   if(res.error) {
+      //     let errors = {}
+      //     console.log("Response", res)
+      //     console.log("Res ERR:", res.error)
+      //     if (res.error === "*Username already exists"){
+      //       errors['username'] = res.error
+      //     }else {
+      //       errors['email'] = res.error
+      //     }
+      //     this.setState({
+      //       errors: errors
+      //     })
+      //   }else {
+      //     console.log("USER SUCCESSFULLY LOGGED IN")
+      //     //this.props.handleLogin(res)
+      //   }
+      // })
     }
   }
 
   validateForm = () => {
     let errors = {}
     let formIsValid = true
-
-    if (!this.state.username) {
-      formIsValid = false
-      errors['username'] = '*Please enter your username'
-    }
-
-    if (this.state.username) {
-      if (!this.state.username.match(/^\w+$/)) {
-        formIsValid = false
-        errors['username'] = '*Please use alphanumeric characters only'
-      }
-    }
 
     if (!this.state.email) {
       formIsValid = false
@@ -69,20 +56,13 @@ class SignUpForm extends Component {
       let pattern = new RegExp(/^(('[\w-\s]+')|([\w-]+(?:\.[\w-]+)*)|('[\w-\s]+')([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
       if (!pattern.test(this.state.email)) {
         formIsValid = false
-        errors['email'] = '*Please enter valid email'
+        errors['email'] = '*Please enter a valid email address'
       }
     }
 
     if (!this.state.password) {
       formIsValid = false
       errors['password'] = '*Please enter your password'
-    }
-
-    if (this.state.password) {
-      if (!this.state.password.match(/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,}).*$/)) {
-        formIsValid = false
-        errors['password'] = '*Please enter secure and strong password'
-      }
     }
 
     this.setState({
@@ -97,20 +77,9 @@ class SignUpForm extends Component {
     const { username, email, password } = this.state
 
     return (
-      <div id='signUp'>
-        <h3>Sign up</h3>
+      <div id='login'>
+        <h3>Login</h3>
         <form onSubmit={this.handleSubmit} >
-          <label>Username:
-            <input
-              className="input"
-              type='text'
-              name='username'
-              value={username}
-              onChange={this.handleChange}
-            />
-          </label>
-          <div className='errorMsg'>{this.state.errors.username}</div>
-
           <label>Email:
             <input
               className="input"
@@ -132,7 +101,7 @@ class SignUpForm extends Component {
             />
           </label>
           <div className='errorMsg'>{this.state.errors.password}</div>
-          <input type='submit' className='button' value='Sign Up'/>
+          <input type='submit' className='button' value='Login'/>
         </form>
       </div>
     )
@@ -140,4 +109,4 @@ class SignUpForm extends Component {
 
 }
 
-export default SignUpForm
+export default LoginForm

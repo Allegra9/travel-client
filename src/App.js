@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 //import logo from './logo.svg'
 //import './App.css'
 import Trips from './components/Trips.js'
-
 import SignUpForm from './components/SignUpForm'
+import LoginForm from './components/LoginForm'
 
 class App extends Component {
 
@@ -12,6 +12,7 @@ class App extends Component {
       <div>
         <Trips />
         <SignUpForm />
+        <LoginForm />
       </div>
     )
   }

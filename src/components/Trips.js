@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { getAllTrips } from '../adapter/api'
-//import { getTrip } from '../adapter/api'
+import { getTrips } from '../adapter/api'
 import NewTripForm from './NewTripForm'
 import ShowTrip from './ShowTrip'
 
@@ -15,14 +14,21 @@ class Trip extends Component {
     trips: [],
     tripsCount: '',
     newForm: '',
-    tripToShow: ''
+    tripToShow: '',
+
+    activeUserId: '',
   }
 
   componentDidMount() {
-    getAllTrips()
-      .then(trips => {
+    console.log("WE IN TRIP, active user is: ", this.props.activeUser)
+    this.setState({
+      activeUserId: this.props.activeUser.id
+    }, () => {
+      getTrips(this.state.activeUserId).then(trips => {
+        console.log("My trips: ", trips)
         this.setState({ trips })
       })
+    })
   }
 
   //re-renders Trips anytime a new trip is added:
@@ -31,7 +37,7 @@ class Trip extends Component {
     this.setState({
       tripsCount: this.state.tripsCount + 1,
       newForm: '',
-    }, () => getAllTrips()
+    }, () => getTrips(this.state.activeUserId)
     .then(trips => {
       this.setState({ trips })
     })
@@ -60,7 +66,7 @@ class Trip extends Component {
   cancelShow = () => {
     this.setState({
       tripToShow: '',
-    }, () => getAllTrips()
+    }, () => getTrips(this.state.activeUserId)
     .then(trips => {
       this.setState({ trips })
     })
@@ -114,6 +120,7 @@ class Trip extends Component {
         {
           this.state.newForm ?
             <NewTripForm
+              activeUserId={this.state.activeUserId}
               addTrip={this.addTrip}
               cancelNewForm={this.cancelNewForm}
             />

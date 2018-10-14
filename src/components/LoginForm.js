@@ -34,7 +34,8 @@ class LoginForm extends Component {
           })
         }else {
           console.log("USER SUCCESSFULLY LOGGED IN")
-          //this.props.handleLogin(res)
+          console.log("Response", res)  // is a token
+          this.props.handleLogin(res)
         }
       })
     }

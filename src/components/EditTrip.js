@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { editTrip } from '../adapter/api';
-//import { getTrip } from '../adapter/api';
 
 class EditTrip extends Component{
 
@@ -16,10 +15,10 @@ class EditTrip extends Component{
     id: '',
   }
 
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault()
     console.log(this.state)
-    await editTrip(this.state)  // PUT
+    editTrip(this.state)  // PUT
     //.then(res => console.log(res.error))
     // if (errors){
     //   console.log("ERR: ", errors)

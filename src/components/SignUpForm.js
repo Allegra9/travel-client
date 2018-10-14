@@ -37,7 +37,8 @@ class SignUpForm extends Component {
           })
         }else {
           console.log("USER SUCCESSFULLY CREATED")
-          //this.props.handleLogin(res)
+          console.log("Response", res)  // is a token
+          this.props.handleLogin(res)
         }
       })
     }

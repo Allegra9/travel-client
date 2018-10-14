@@ -6,11 +6,10 @@ const HEADERS = {
   //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS'
 };
 
-//TRIPS:
-export const getAllTrips = () => {
-  return fetch(`${API_ROOT}/trips`)
-    .then(res => res.json())
-}
+// export const getAllTrips = () => {
+//   return fetch(`${API_ROOT}/trips`)
+//     .then(res => res.json())
+// }
 
 // export const getTrip = (trip_id) => {
 //   console.log("GETTING ONE:", trip_id)
@@ -18,11 +17,16 @@ export const getAllTrips = () => {
 //     .then(res => res.json())
 // }
 
-export const createTrip = (trip) => {
-  console.log(trip)
-  return fetch(`${API_ROOT}/trips`, {
+//TRIPS:
+export const createTrip = (id, trip, token) => {
+  console.log("api, createTrip: ", trip)
+  return fetch(`${API_ROOT}/${id}/trips`, {
     method: 'POST',
-    headers: HEADERS,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': getToken()
+    },
     body: JSON.stringify(trip)
   }).then(resp => resp.json())
   //.then(res => console.log(res))
@@ -63,4 +67,29 @@ export const loginUser = (user) => {
     body: JSON.stringify(user)
   })
   .then(res => res.json())
+}
+
+const getToken = () => localStorage.getItem('token')
+
+export const getCurrentUser = (token) => {
+  return fetch(`${API_ROOT}/current_user`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': getToken()
+    },
+  }).then(res => res.json())
+}
+
+//GET USER'S TRIPS:
+export const getTrips = (id, token) => {
+  return fetch(`${API_ROOT}/${id}/trips`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': getToken()
+    }
+  }).then(res => res.json())
 }

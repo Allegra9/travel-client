@@ -8,7 +8,7 @@ import '../css/Form.css'
 class NewTripForm extends Component{
 
   state={
-    user_id: 1,
+    user_id: '',
     name: '',
     location: '',
     country: '',
@@ -26,7 +26,7 @@ class NewTripForm extends Component{
     if (this.validateForm()) {
       console.log(this.state)
       console.log("DATE COMPARISON: ", this.state.date_from < this.state.date_to)
-      createTrip(this.state)
+      createTrip(this.props.activeUserId, this.state)
       .then(res => {
         if (!res.id){
           console.log("DIDN'T happen server side")
@@ -55,6 +55,13 @@ class NewTripForm extends Component{
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  componentDidMount() {
+    console.log("NewtripForm, activeUserId: ", this.props.activeUserId)
+    this.setState({
+      user_id: this.props.activeUserId
     })
   }
 

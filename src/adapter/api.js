@@ -55,3 +55,12 @@ export const createUser = (user) => {
   })
   .then(res => res.json())
 }
+
+export const loginUser = (user) => {
+  return fetch(`${API_ROOT}/login`, {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify(user)
+  })
+  .then(res => res.json())
+}

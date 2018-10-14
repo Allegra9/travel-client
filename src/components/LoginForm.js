@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import '../css/SignUpForm.css'
-//import { createUser } from '../adapter/api'
+import { loginUser } from '../adapter/api'
 
 class LoginForm extends Component {
 
@@ -20,25 +20,23 @@ class LoginForm extends Component {
     e.preventDefault()
     if (this.validateForm()) {
       console.log(this.state)
-      // createUser(this.state)
-      // .then(res => {
-      //   if(res.error) {
-      //     let errors = {}
-      //     console.log("Response", res)
-      //     console.log("Res ERR:", res.error)
-      //     if (res.error === "*Username already exists"){
-      //       errors['username'] = res.error
-      //     }else {
-      //       errors['email'] = res.error
-      //     }
-      //     this.setState({
-      //       errors: errors
-      //     })
-      //   }else {
-      //     console.log("USER SUCCESSFULLY LOGGED IN")
-      //     //this.props.handleLogin(res)
-      //   }
-      // })
+      loginUser(this.state)
+      .then(res => {
+        if(res.error) {
+          let errors = {}
+          console.log("Response", res)
+          console.log("Res ERR:", res.error)
+          if (res.error){
+            errors['email'] = '*The email and password that you entered did not match our records. Please double-check and try again.'
+          }
+          this.setState({
+            errors: errors
+          })
+        }else {
+          console.log("USER SUCCESSFULLY LOGGED IN")
+          //this.props.handleLogin(res)
+        }
+      })
     }
   }
 

@@ -40,7 +40,7 @@ class App extends Component {
 
   handleLogout = () => {
     this.setState({
-      activeUser: undefined
+      activeUser: ''
     })
     localStorage.clear()
   }

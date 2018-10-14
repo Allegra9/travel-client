@@ -140,12 +140,18 @@ class Trip extends Component {
             />
           :
             <div>
-              <h1>MY TRIPS:</h1>
-              <section className='timeline'>
-                <div className='container'>
-                  {trips}
+            {
+              this.state.trips.length > 0 ?
+                <div>
+                  <h1>MY TRIPS:</h1>
+                  <section className='timeline'>
+                    <div className='container'>
+                      {trips}
+                    </div>
+                  </section>
                 </div>
-              </section>
+              : <h1>no trips yet! Go add some...</h1>
+            }
             </div>
         }
       </div>

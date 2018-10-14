@@ -28,15 +28,14 @@ class NewTripForm extends Component{
       console.log("DATE COMPARISON: ", this.state.date_from < this.state.date_to)
       createTrip(this.props.activeUserId, this.state)
       .then(res => {
-        if (!res.id){
-          console.log("DIDN'T happen server side")
-          //alert("Name, location and country can't be blank")
-          // let p = document.querySelector('p')
-          // p.innerText = "Name, location, country and dates must be valid"
-          // p.style.color = 'red'
-          // let form = document.querySelector('form')
-          // form.prepend(p)
-          // return
+        if(res.error) {
+          let errors = {}
+          console.log("Response", res)
+          console.log("Res ERR:", res.error)
+          errors['server'] = res.error
+          this.setState({
+            errors: errors
+          })
         }else {
           this.setState({
               name: '',
@@ -70,12 +69,12 @@ class NewTripForm extends Component{
   }
 
   onFromDateChange = (date) => {     //object to string
-    date = JSON.stringify(date).slice(1,11) // 2018-10-24
+    console.log("date from: ", date)
     this.setState({ date_from: date })
   }
 
   onToDateChange = (date) => {
-    date = JSON.stringify(date).slice(1,11)
+    //console.log("date to: ", date)
     if (this.state.date_from <= date) {
       this.setState({ date_to: date})
     }else {
@@ -149,17 +148,7 @@ class NewTripForm extends Component{
     return (
       <div className="form">
         <h3>NEW TRIP:</h3>
-        <p></p>
         <form onSubmit={this.handleSubmit} >
-
-          {/*
-          EXAMPLE:
-          // <label className="form-field" htmlFor="email">
-          //   <span>E-mail:</span>
-          //   <input name="email" type="email" onChange={handleChange} />
-          // </label>
-          // <div className="form-field-error">{errors.email}</div>
-          */}
 
           <label className="form-field" htmlFor="trip name">
             <span>Trip name:</span>
@@ -247,6 +236,7 @@ class NewTripForm extends Component{
               </div>
           }
           <input type="submit" value="SUBMIT" className="btn btn-info submitBtn"/>
+          <div className='errorMsg'>{this.state.errors.server}</div>
         </form>
         <button onClick={this.props.cancelNewForm} className="btn btn-light cancelBtn">cancel</button>
       </div>

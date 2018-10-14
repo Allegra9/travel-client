@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import EditTrip from './EditTrip'
+import EditTrip from './EditTripForm'
 import { deleteTrip } from '../adapter/api';
 
 class ShowTrip extends Component {

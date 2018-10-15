@@ -227,14 +227,14 @@ class EditTrip extends Component{
                 <span className="calendar">
                   <Calendar
                     onChange={this.onFromDateChange}
-                    value={this.state.date}
+                    value={new Date(date_from)}
                   />
                 </span>
 
                 <span className="calendar">
                   <Calendar
                     onChange={this.onToDateChange}
-                    value={this.state.date}
+                    value={new Date(date_to)}
                   />
                 </span>
                 <div className='errorMsg'>{this.state.errors.selectDates}</div>

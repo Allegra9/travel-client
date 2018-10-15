@@ -36,7 +36,11 @@ export const editTrip = (trip) => {
   console.log(trip)
   return fetch(`${API_ROOT}/trips/${trip.id}`, {
     method: 'PUT',
-    headers: HEADERS,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': getToken()
+    },
     body: JSON.stringify(trip)
   }).then(resp => resp.json())
   //.then(res => console.log(res))
@@ -46,6 +50,11 @@ export const deleteTrip = (trip) => {
   console.log("deleting: ", trip)
   return fetch(`${API_ROOT}/trips/${trip.id}`, {
     method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': getToken()
+    },
   })
 }
 

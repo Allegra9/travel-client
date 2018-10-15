@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { editTrip } from '../adapter/api';
+import worldCountries from 'world-countries'
+import Select from 'react-select'
+import Calendar from 'react-calendar'
+import '../css/Form.css'
 
 class EditTrip extends Component{
 
@@ -13,31 +17,34 @@ class EditTrip extends Component{
     date_to: '',
     notes: '',
     id: '',
+
+    errors: {},
+    clicked: false,
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state)
-    editTrip(this.state)  // PUT
-    //.then(res => console.log(res.error))
-    // if (errors){
-    //   console.log("ERR: ", errors)
-    // }
-    .then(res => {
-      if (res.error){
-        console.log("DIDN'T happen")
-        //alert("Name, location and country can't be blank")
-        let p = document.querySelector('p')
-        p.innerText = "Name, location, country and dates can't be blank"
-        p.style.color = 'red'
-        let form = document.querySelector('form')
-        form.prepend(p)
-        return "Errors"
-      } else {
-        this.props.showTrip(this.state)
-        this.props.cancelEdit()
-      }
-    })
+    if (this.validateForm()) {
+      console.log(this.state)
+      console.log("DATE COMPARISON: ", this.state.date_from < this.state.date_to)
+      //createTrip(this.props.activeUserId, this.state)
+      editTrip(this.state)   //PUT
+      .then(res => {
+        if (res.error){
+          let errors = {}
+          console.log("Response", res)
+          console.log("Res ERR:", res.error)
+          errors['server'] = res.error
+          this.setState({
+            errors: errors
+          })
+        } else {
+          console.log("RES in EditForm: ", res)
+          this.props.showTrip(res)
+          this.props.cancelEdit()
+        }
+      })
+    }
   }
 
   handleChange = (e) => {
@@ -52,57 +59,196 @@ class EditTrip extends Component{
 
   getTrip = (trip) => {
     this.setState({
+      id: trip.id,
       user_id: trip.user_id,
       name: trip.name,
       location: trip.location,
       country: trip.country,
       things_did: trip.things_did,
+      notes: trip.notes,
       date_from: trip.date_from,
       date_to: trip.date_to,
-      notes: trip.notes,
-      id: trip.id
     })
+  }
+
+  toggleCalendar = () => {
+    this.setState({ clicked: !this.state.clicked })
+  }
+
+  onFromDateChange = (date) => {     //object to string
+    console.log("date from: ", date)
+    this.setState({ date_from: date })
+  }
+
+  onToDateChange = (date) => {
+    //console.log("date to: ", date)
+    if (this.state.date_from <= date) {
+      this.setState({ date_to: date})
+    }else {
+      alert("*Dates must be valid!")
+    }
+  }
+
+  handleCountryOption = (selectedOption) => {    // added
+    //console.log(Object.values(selectedOption)[0])
+    this.setState({
+      country: Object.values(selectedOption)[0]
+    })
+  }
+
+  getCountriesObj = () => {
+    let selectOptions = []
+    worldCountries.forEach(country => {
+      let obj = {}
+      obj['value'] = country.name.common, obj['label'] = country.name.common
+      selectOptions = [...selectOptions, obj]
+    })
+    return selectOptions
+  }
+  //[ { value: 'France', label: 'France' }, {...} ]
+
+  validateForm = () => {
+    let errors = {}
+    let formIsValid = true
+
+    if (!this.state.name) {
+      formIsValid = false
+      errors['name'] = '*Please enter a trip name'
+    }
+
+    if (!this.state.location) {
+      formIsValid = false
+      errors['location'] = '*Please enter a trip location'
+    }
+
+    if (!this.state.country) {
+      formIsValid = false
+      errors['country'] = '*Please select a country'
+    }
+
+    if (!this.state.date_from && !this.state.date_to) {
+      formIsValid = false
+      errors['openCalendar'] = '*Click on Calendar to select trip dates'
+    }
+
+    if (!this.state.date_from || !this.state.date_to) {
+      formIsValid = false
+      errors['selectDates'] = '*Please select trip dates'
+    }
+
+    this.setState({
+      errors: errors
+    })
+
+    return formIsValid
   }
 
   render() {
 
-    //const { trip } = this.props;
+    const {
+      name,
+      location,
+      country,
+      things_did,
+      notes,
+      date_from,
+      date_to,
+    } = this.state
 
     return (
-      <div>
-        <p></p>
+      <div className="form">
+        <h3>NEW TRIP:</h3>
         <form onSubmit={this.handleSubmit} >
-          <input type="text" value={this.state.name} name="name"
-            onChange={this.handleChange}
-            placeholder="Trip name"
-          /> <br/>
-        <input type="text" value={this.state.location} name="location"
-            onChange={this.handleChange}
-            placeholder="Location"
-          /> <br/>
-        <input type="text" value={this.state.country} name="country"
-            onChange={this.handleChange}
-            placeholder="Country"
-          /> <br/>
-        <input type="text" value={this.state.things_did} name="things_did"
-            onChange={this.handleChange}
-            placeholder="Things did"
-          /> <br/>
-        <input type="text" value={this.state.notes} name="notes"
-            onChange={this.handleChange}
-            placeholder="Notes"
-          /> <br/>
-        <input type="text" value={this.state.date_from} name="date_from"
-            onChange={this.handleChange}
-            placeholder="date from"
-          /> <br/>
-        <input type="text" value={this.state.date_to} name="date_to"
-            onChange={this.handleChange}
-            placeholder="date to"
-          /> <br/>
-        <input type="submit" value="Update" />
+
+          <label className="form-field" htmlFor="trip name">
+            <span>Trip name:</span>
+            <input
+              type="text"
+              value={name}
+              name="name"
+              onChange={this.handleChange}
+              placeholder="Birthday weekend"
+            />
+          </label>
+          <div className='errorMsg'>{this.state.errors.name}</div>
+
+          <label className="form-field" htmlFor="location">
+            <span>Location:</span>
+            <input
+              type="text"
+              value={location}
+              name="location"
+              onChange={this.handleChange}
+              placeholder="Amalfi Coast"
+            />
+          </label>
+          <div className='errorMsg'>{this.state.errors.location}</div>
+
+          <label className="form-field" htmlFor="country">
+            <span>Country:</span>
+            <span className="country">
+            <Select
+              onChange={this.handleCountryOption}
+              options={this.getCountriesObj()}
+              placeholder={country}
+              isSearchable={true}
+            />
+            </span>
+          </label>
+          <div className='errorMsg'>{this.state.errors.country}</div>
+
+          <label className="form-field" htmlFor="things did">
+            <span>Things did:</span>
+            <input
+              type="text"
+              value={things_did}
+              name="things_did"
+              onChange={this.handleChange}
+              placeholder="Swimming, tanning, hiking, road trips..."
+            />
+          </label>
+
+          <label className="form-field" htmlFor="notes">
+            <span>Notes:</span>
+            <input
+              type="text"
+              value={notes}
+              name="notes"
+              onChange={this.handleChange}
+              placeholder="Met Jupiter and Salma from Wknd!"
+            />
+          </label>
+
+          {
+            this.state.clicked ?
+              <div>
+                <h3>Date from - date to:</h3>
+
+                <span className="calendar">
+                  <Calendar
+                    onChange={this.onFromDateChange}
+                    value={this.state.date}
+                  />
+                </span>
+
+                <span className="calendar">
+                  <Calendar
+                    onChange={this.onToDateChange}
+                    value={this.state.date}
+                  />
+                </span>
+                <div className='errorMsg'>{this.state.errors.selectDates}</div>
+              </div>
+            :
+              <div>
+                <button className="calendarBtn" onClick={this.toggleCalendar}>CALENDAR</button>
+                <div className='errorMsg'>{this.state.errors.openCalendar}</div>
+              </div>
+          }
+          <input type="submit" value="UPDATE" className="btn btn-info submitBtn"/>
+          <div className='errorMsg'>{this.state.errors.server}</div>
         </form>
-        <h4 onClick={this.props.cancelEdit}>cancel</h4>
+        <button onClick={this.props.cancelEdit} className="btn btn-light cancelBtn">cancel</button>
       </div>
     )
   }

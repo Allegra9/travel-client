@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import EditTrip from './EditTripForm'
-import { deleteTrip } from '../adapter/api';
+import { deleteTrip } from '../adapter/api'
+import '../css/Show.css'
 
 class ShowTrip extends Component {
 
@@ -31,19 +32,27 @@ class ShowTrip extends Component {
 
     return (
       <div>
-        <li key={trip.id}>
-          <h4 onClick={this.props.cancelShow}>BACK TO ALL TRIPS</h4>
-          NAME: {trip.name} <br/>
-          LOCATION: {trip.location} <br/>
-          COUNTRY: {trip.country} <br/>
-          THINGS DID: {trip.things_did} <br/>
-          NOTES: {trip.notes} <br/>
-          DATE FROM: {trip.date_from.slice(0,10)} <br/>
-          DATE TO: {trip.date_to.slice(0,10)} <br/>
+        <button className='btn btn-info' onClick={this.props.cancelShow}>BACK TO ALL TRIPS</button>
+
+        <div key={trip.id} className="show-field">
+          <h3>{trip.name}</h3>
+          <h4>{trip.location}, {trip.country.toUpperCase()} </h4>
+          {
+            trip.things_did ?
+              <p>Things did: {trip.things_did}</p>
+            : null
+          }
+          {
+            trip.notes ?
+              <p>Notes: {trip.notes}</p>
+            : null
+          }
+          <p><b>Travelled: </b>{trip.date_from.slice(0,10)} - {trip.date_to.slice(0,10)} </p>
+
           USER ID: {trip.user_id} <br/>
           TRIP ID: {trip.id} <br/>
-        </li>
-        <br/>
+        </div>
+
         {
           this.state.tripToEdit ?
             <EditTrip
@@ -52,9 +61,9 @@ class ShowTrip extends Component {
               showTrip={this.props.showTrip}
             />
           :
-            <div>
-              <h4 onClick={ () => this.chosenToEdit(trip) }>EDIT</h4>
-              <h4 onClick={ () => this.delete(trip) }>DELETE</h4>
+            <div className="two-btns">
+              <button className='btn btn-light' onClick={ () => this.chosenToEdit(trip) }>EDIT</button>
+              <button className='btn btn-danger' id='delete' onClick={ () => this.delete(trip) }>DELETE</button>
             </div>
         }
       </div>

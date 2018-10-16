@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { getTrips } from '../adapter/api'
 import NewTripForm from './NewTripForm'
 import ShowTrip from './ShowTrip'
-
-import '../css/Timeline.css';
+import '../css/Timeline.css'
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
 'August', 'September', 'October', 'November', 'December'];

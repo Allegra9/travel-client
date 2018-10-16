@@ -14,7 +14,7 @@ class App extends Component {
 
   handleLogin = (res) => {
     console.log("HANDLE LOGIN IN APP", res)
-    localStorage.setItem('token', res.token);
+    localStorage.setItem('token', res.token)
       this.updateCurrentUser(res.token);
   }
 

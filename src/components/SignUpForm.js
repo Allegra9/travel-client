@@ -32,9 +32,7 @@ class SignUpForm extends Component {
           }else {
             errors['email'] = res.error
           }
-          this.setState({
-            errors: errors
-          })
+          this.setState({ errors })
         }else {
           console.log("USER SUCCESSFULLY CREATED")
           console.log("Response", res)  // is a token
@@ -86,9 +84,7 @@ class SignUpForm extends Component {
       }
     }
 
-    this.setState({
-      errors: errors
-    })
+    this.setState({ errors })
 
     return formIsValid
   }

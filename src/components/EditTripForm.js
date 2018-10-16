@@ -157,7 +157,7 @@ class EditTrip extends Component{
 
     return (
       <div className="form">
-        <h3>NEW TRIP:</h3>
+        <h3>EDIT TRIP:</h3>
         <form onSubmit={this.handleSubmit} >
 
           <label className="form-field" htmlFor="trip name">

@@ -1,0 +1,33 @@
+.greeting {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.logout {
+  /* margin-left: 75%; */
+}
+
+.more {
+  margin-left: 90%;
+  width: 100px;
+}
+
+.menu {
+  align-items: center;
+  width: 20%;
+  float: right;
+  position: absolute;
+  margin-left: 80%;
+  margin-right: auto;
+  padding: 40px;
+  text-align: center;
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 0 20px 25px -15px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.btn {
+  display: block !important;
+  margin: 0;
+}

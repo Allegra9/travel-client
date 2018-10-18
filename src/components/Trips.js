@@ -128,7 +128,7 @@ class Trip extends Component {
         {
           this.state.newForm || this.state.tripToShow ?
             null
-          : <button onClick={this.newForm}>Add New TRIP</button>
+          : <button className='btn btn-info' onClick={this.newForm}>Add New TRIP</button>
         }
         {
           this.state.tripToShow ?

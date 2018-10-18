@@ -10,8 +10,20 @@ class NavBar extends Component {
   toggleMenu = (e) => {
     e.preventDefault()
     this.setState({
-      showMenu: !this.state.showMenu
+      showMenu: true
+    }, () => {
+      document.addEventListener('click', this.closeMenu)
     })
+  }
+
+  closeMenu = (e) => {
+    if (this.dropdownMenu !== null && !this.dropdownMenu.contains(e.target)) {
+      this.setState({
+        showMenu: false
+      }, () => {
+        document.removeEventListener('click', this.closeMenu)
+      })
+    }
   }
 
   render() {

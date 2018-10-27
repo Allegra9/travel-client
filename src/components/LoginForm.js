@@ -73,7 +73,7 @@ class LoginForm extends Component {
 
   render() {
 
-    const { username, email, password } = this.state
+    const { email, password } = this.state
 
     return (
       <div id='login'>

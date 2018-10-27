@@ -2,7 +2,7 @@ const API_ROOT = `http://localhost:3000`;
 const HEADERS = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Access-Control-Allow-Origin': '*',
+  //'Access-Control-Allow-Origin': '*',
   //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS'
 };
 

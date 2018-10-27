@@ -151,7 +151,7 @@ class NewTripForm extends Component{
         <form onSubmit={this.handleSubmit} >
 
           <label className="form-field" htmlFor="trip name">
-            <span>Trip name:</span>
+            <span>Trip name:*</span>
             <input
               type="text"
               value={name}
@@ -163,7 +163,7 @@ class NewTripForm extends Component{
           <div className='errorMsg'>{this.state.errors.name}</div>
 
           <label className="form-field" htmlFor="location">
-            <span>Location:</span>
+            <span>Location:*</span>
             <input
               type="text"
               value={location}
@@ -175,7 +175,7 @@ class NewTripForm extends Component{
           <div className='errorMsg'>{this.state.errors.location}</div>
 
           <label className="form-field" htmlFor="country">
-            <span>Country:</span>
+            <span>Country:*</span>
             <span className="country">
             <Select
               onChange={this.handleCountryOption}
@@ -212,7 +212,7 @@ class NewTripForm extends Component{
           {
             this.state.clicked ?
               <div>
-                <h3>Date from - date to:</h3>
+                <h3>Date from - date to:*</h3>
 
                 <span className="calendar">
                   <Calendar

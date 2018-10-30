@@ -9,7 +9,14 @@ class App extends Component {
 
   state = {
     activeUser : '',
-    //signup: false
+    signup: false
+  }
+
+  toggleSignUp = (e) => {
+    e.preventDefault()
+    this.setState({
+      signup: !this.state.signup
+    })
   }
 
   handleLogin = (res) => {
@@ -60,8 +67,19 @@ class App extends Component {
           </Fragment>
         :
           <Fragment>
-            <SignUpForm handleLogin={this.handleLogin} />
-            <LoginForm handleLogin={this.handleLogin} />
+          {
+            this.state.signup
+            ?
+              <SignUpForm
+                handleLogin={this.handleLogin}
+                toggleSignUp={this.toggleSignUp}
+              />
+            :
+              <LoginForm
+                handleLogin={this.handleLogin}
+                toggleSignUp={this.toggleSignUp}
+              />
+          }
           </Fragment>
         }
       </div>

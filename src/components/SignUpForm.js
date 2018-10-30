@@ -131,6 +131,7 @@ class SignUpForm extends Component {
           <div className='errorMsg'>{this.state.errors.password}</div>
           <input type='submit' className='button' value='Sign Up'/>
         </form>
+        <p> Already have an account? <a href='' onClick={this.props.toggleSignUp}> Login here</a></p>
       </div>
     )
   }

@@ -4,6 +4,7 @@ import worldCountries from 'world-countries'
 import Select from 'react-select'
 import Calendar from 'react-calendar'
 import '../css/Form.css'
+import Dropzone from 'react-dropzone';
 
 class NewTripForm extends Component{
 
@@ -19,6 +20,8 @@ class NewTripForm extends Component{
 
     errors: {},
     clicked: false,
+
+    files: [],
   }
 
   handleSubmit = (e) => {
@@ -55,6 +58,34 @@ class NewTripForm extends Component{
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  onDrop = (files) => {
+    console.log(files[0])  //lastModifiedDate, name, type: "image/png", size
+    files.forEach(file => {
+      const reader = new FileReader();
+
+      let fileToUpload = {
+        data: '',
+        name: file.name,
+        type: file.type,
+        size: file.size
+      }
+      reader.onload = () => {
+        const fileAsBinaryString = reader.result;
+        fileToUpload.data = 'data:image/jpeg;base64,' + btoa(fileAsBinaryString)
+        console.log(fileToUpload)
+        this.setState({ files: [...this.state.files, fileToUpload] })
+      }
+      reader.onabort = () => console.log('file reading was aborted');
+      reader.onerror = () => console.log('file reading has failed');
+
+      reader.readAsBinaryString(file);
+    })
+  }
+
+  onCancel = () => {
+    this.setState({ files: [] })
   }
 
   componentDidMount() {
@@ -235,6 +266,29 @@ class NewTripForm extends Component{
                 <div className='errorMsg'>{this.state.errors.openCalendar}</div>
               </div>
           }
+
+          <section>
+            <div className=''>
+              <Dropzone
+                onDrop={this.onDrop}
+                onCancel={this.onCancel}
+                className="add-file"
+              >
+                <p>Try dropping some files here, or click to select files to upload.</p>
+              </Dropzone>
+            </div>
+            <aside>
+              <h2>Dropped files</h2>
+              <ul>
+                {
+                  this.state.files.map(file =>
+                    <li key={Math.random()}><img src={file.data}></img>{file.name} - {file.size} bytes</li>
+                  )
+                }
+              </ul>
+            </aside>
+          </section>
+
           <input type="submit" value="SUBMIT" className="btn btn-info submitBtn"/>
           <div className='errorMsg'>{this.state.errors.server}</div>
         </form>

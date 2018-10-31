@@ -68,14 +68,22 @@ class NewTripForm extends Component{
       let fileToUpload = {
         data: '',
         name: file.name,
-        type: file.type,
-        size: file.size
+        type: this.validateImageType(file.type),
+        size: this.validateImageSize(file.size)
       }
+
       reader.onload = () => {
         const fileAsBinaryString = reader.result;
         fileToUpload.data = 'data:image/jpeg;base64,' + btoa(fileAsBinaryString)
-        console.log(fileToUpload)
-        this.setState({ files: [...this.state.files, fileToUpload] })
+
+        if (fileToUpload.type && fileToUpload.size) {
+          this.setState({
+            files: [...this.state.files, fileToUpload],
+            errors: {}
+          })
+        }else {
+          this.setState({ files: [...this.state.files] })
+        }
       }
       reader.onabort = () => console.log('file reading was aborted');
       reader.onerror = () => console.log('file reading has failed');
@@ -84,8 +92,32 @@ class NewTripForm extends Component{
     })
   }
 
-  onCancel = () => {
-    this.setState({ files: [] })
+  validateImageType = (imageType) => {
+    let errors = {}
+    if (imageType === 'image/png' || imageType === 'image/jpeg'){
+      return imageType
+    }else {
+      errors['dropFile'] = '*Only .jpeg and .png allowed'
+      this.setState({ errors })
+    }
+  }
+
+  validateImageSize = (imageSize) => {
+    let errors = {}
+    if (imageSize < 1000000){
+      return imageSize
+    }else {
+      errors['dropFile'] = '*Image is too large. Max 1MB'
+      this.setState({ errors })
+    }
+  }
+
+  onCancel = (file) => {
+    console.log(file)
+    let filteredFiles = this.state.files.filter(f => f.name !== file.name)
+    this.setState({
+      files: filteredFiles
+    })
   }
 
   componentDidMount() {
@@ -279,10 +311,15 @@ class NewTripForm extends Component{
             </div>
             <aside>
               <h2>Dropped files</h2>
+              <div className='errorMsg'>{this.state.errors.dropFile}</div>
               <ul>
                 {
                   this.state.files.map(file =>
-                    <li key={Math.random()}><img src={file.data}></img>{file.name} - {file.size} bytes</li>
+                    <li key={Math.random()}>
+                      <img src={file.data} alt={file.name}></img>
+                      {file.name} - {file.size} bytes, type: {file.type}
+                      <button onClick={() => this.onCancel(file)}>x</button>
+                    </li>
                   )
                 }
               </ul>

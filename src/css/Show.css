@@ -33,6 +33,7 @@
 }
 
 .two-btns {
+  border: 1px solid #000;
   margin-left: auto;
   margin-right: auto;
   width: 90%;
@@ -41,17 +42,26 @@
   border-radius: 10px;
 }
 
-.imageCard {
-  display: inline-grid;
-  gridColumnStart: 1;
-  gridColumnEnd: 3;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid #000;
+.imageTable {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
 }
 
-.imageTable {
-  display: grid;
-  grid-template-columns: auto auto;
+.imageCard {
+  /* border: 1px solid #000; */
+  /* padding: 4px; */
+  background-color: #e8dcb9;
+  margin: 10px;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  /* border-radius: 10px; */
+  /* border: 2px solid #7de0f2; */
+  /* background: #f9f9f4;
+  box-shadow: 0 20px 25px -15px rgba(0, 0, 0, 0.3); */
+}
+
+.image {
+  width: 350px;
 }

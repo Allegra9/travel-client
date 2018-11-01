@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import EditTrip from './EditTripForm'
 import { deleteTrip } from '../adapter/api'
 import '../css/Show.css'
+import ImagesGrid from './ImagesGrid'
 
 class ShowTrip extends Component {
 
   state={
     tripToEdit: '',
+    mouseOver: false
   }
 
   chosenToEdit = (trip) => {
@@ -26,6 +28,18 @@ class ShowTrip extends Component {
     this.props.cancelShow()
   }
 
+  handleMouseEnter = () => {
+    this.setState({
+      mouseOver: true
+    })
+  }
+
+  handleMouseLeave = () => {
+    this.setState({
+      mouseOver: false
+    })
+  }
+
   render() {
 
     const { trip } = this.props;
@@ -41,6 +55,7 @@ class ShowTrip extends Component {
           img['size'] = JSON.parse(trip.image_size)[i]
           images = [...images, img]
         }
+        console.log(images)
         return images
       }else {
         return []
@@ -72,15 +87,28 @@ class ShowTrip extends Component {
         <div className="imageTable">
           {
             makeImgObj().map(img =>
-              <span key={Math.random()} className="imageCard">
-                <img src={img.data} alt={img.name}></img>
-                <p>{img.name}</p>
-                <p>{img.type} - {img.size}</p>
+              <span
+                key={Math.random()}
+                className="imageCard"
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
+              >
+                <img src={img.data} alt={img.name} className="image" id={img.name}></img>
+            {
+              this.state.mouseOver ?
+                <div>
+                  <p>{img.name}</p>
+                  <p>{img.type} - {img.size}</p>
+                </div>
+              : null
+            }
               </span>
             )
           }
         </div>
         </div>
+
+        <ImagesGrid images={makeImgObj()}/>
 
         {
           this.state.tripToEdit ?

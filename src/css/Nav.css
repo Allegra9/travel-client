@@ -1,15 +1,32 @@
+.navbar {
+  background: #e8dcb9
+}
+
 .greeting {
-  text-align: center;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
+  text-align: left;
   text-transform: capitalize;
 }
 
 .logout {
-  /* margin-left: 75%; */
+  margin-left: 75%;
+}
+
+.dot {
+  margin-top: -90px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: grey;
+  box-shadow: 0px 20px 0px grey, 0px 40px 0px grey;
 }
 
 .more {
-  margin-left: 90%;
-  width: 100px;
+  /* position: absolute; */
+  margin-top: 0;
+  float: right;
+  padding: 10px 50px 10px 10px;
 }
 
 .menu {
@@ -31,4 +48,31 @@
 .btn {
   display: block !important;
   margin: 0;
+}
+
+.ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    width: 100vw;
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.li {
+    float: right;
+}
+
+.li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.li a:hover {
+    background-color: #111;
 }

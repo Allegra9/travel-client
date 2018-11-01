@@ -1,9 +1,17 @@
 import React, { Component } from "react"
 import "../css/Nav.css"
+import Button from '@material-ui/core/Button';
 
 class NavBar extends Component {
   state = {
-    showMenu: false
+    showMenu: false,
+    open: false,
+  }
+
+  handleClick = () => {
+    this.setState({
+      open: !this.state.open
+    })
   }
 
   toggleMenu = e => {
@@ -22,11 +30,17 @@ class NavBar extends Component {
 
   render() {
     return (
-      <div>
+      <div className="navbar">
         <h2 className="greeting">Hi {this.props.activeUser.username}!</h2>
-        <button className="more" onClick={this.toggleMenu}>
-          More
-        </button>
+        <span className="more" onClick={this.toggleMenu}>
+          <div className="dot"></div>
+        </span>
+        <div className="logout">
+          <Button variant="contained" color="primary">
+            Logout
+          </Button>
+        </div>
+
         {
           this.state.showMenu ?
             <div className="menu" ref={el => (this.dropdownMenu = el)}>

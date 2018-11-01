@@ -31,16 +31,20 @@ class ShowTrip extends Component {
     const { trip } = this.props;
 
     const makeImgObj = () => {
-      let images = []
-      for(let i = 0; i < JSON.parse(trip.image_name).length; i++) {
-        let img = {}
-        img['data'] = JSON.parse(trip.image_data)[i]
-        img['name'] = JSON.parse(trip.image_name)[i]
-        img['type'] = JSON.parse(trip.image_type)[i]
-        img['size'] = JSON.parse(trip.image_size)[i]
-        images = [...images, img]
+      if (JSON.parse(trip.image_name) !== null){
+        let images = []
+        for(let i = 0; i < JSON.parse(trip.image_name).length; i++) {
+          let img = {}
+          img['data'] = JSON.parse(trip.image_data)[i]
+          img['name'] = JSON.parse(trip.image_name)[i]
+          img['type'] = JSON.parse(trip.image_type)[i]
+          img['size'] = JSON.parse(trip.image_size)[i]
+          images = [...images, img]
+        }
+        return images
+      }else {
+        return []
       }
-      return images
     }
 
     return (
@@ -65,15 +69,17 @@ class ShowTrip extends Component {
           USER ID: {trip.user_id} <br/>
           TRIP ID: {trip.id} <br/>
 
+        <div className="imageTable">
           {
             makeImgObj().map(img =>
-              <li key={Math.random()}>
+              <span key={Math.random()} className="imageCard">
                 <img src={img.data} alt={img.name}></img>
                 <p>{img.name}</p>
                 <p>{img.type} - {img.size}</p>
-              </li>
+              </span>
             )
           }
+        </div>
         </div>
 
         {

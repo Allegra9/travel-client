@@ -56,7 +56,7 @@ class EditTrip extends Component{
   }
 
   deleteImage = (img) => {
-    console.log(img)
+    //console.log(img)
     this.setState({
       files: this.state.files.filter(image => image !== img)
     })
@@ -67,7 +67,7 @@ class EditTrip extends Component{
   }
 
   getTrip = (trip) => {
-    console.log("in get trip: ", trip)
+    //console.log("in get trip: ", trip)
     this.setState({
       id: trip.id,
       user_id: trip.user_id,
@@ -83,17 +83,20 @@ class EditTrip extends Component{
   }
 
   makeImgObj = (image_data, image_name, image_type, image_size) => {
-    let images = []
-    for(let i = 0; i < JSON.parse(image_name).length; i++) {
-      let img = {}
-      img['data'] = JSON.parse(image_data)[i]
-      img['name'] = JSON.parse(image_name)[i]
-      img['type'] = JSON.parse(image_type)[i]
-      img['size'] = JSON.parse(image_size)[i]
-      images = [...images, img]
+    if (JSON.parse(image_name) !== null){
+      let images = []
+      for(let i = 0; i < JSON.parse(image_name).length; i++) {
+        let img = {}
+        img['data'] = JSON.parse(image_data)[i]
+        img['name'] = JSON.parse(image_name)[i]
+        img['type'] = JSON.parse(image_type)[i]
+        img['size'] = JSON.parse(image_size)[i]
+        images = [...images, img]
+      }
+      return images
+    }else {
+      return []
     }
-    console.log(images)
-    return images
   }
 
   onDrop = (files) => {
@@ -148,13 +151,13 @@ class EditTrip extends Component{
     }
   }
 
-  onCancel = (file) => {
-    console.log(file)
-    let filteredFiles = this.state.files.filter(f => f.name !== file.name)
-    this.setState({
-      files: filteredFiles
-    })
-  }
+  // onCancel = (file) => {
+  //   console.log(file)
+  //   let filteredFiles = this.state.files.filter(f => f.name !== file.name)
+  //   this.setState({
+  //     files: filteredFiles
+  //   })
+  // }
 
   toggleCalendar = () => {
     this.setState({ clicked: !this.state.clicked })

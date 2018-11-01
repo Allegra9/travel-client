@@ -48,6 +48,7 @@ class NewTripForm extends Component{
               notes: '',
               date_from: '',
               date_to: '',
+              files: []
           }, () => this.props.addTrip() )
         }
       })

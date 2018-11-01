@@ -30,6 +30,26 @@ class ShowTrip extends Component {
 
     const { trip } = this.props;
 
+    trip.image_data = JSON.parse(trip.image_data)
+    trip.image_name = JSON.parse(trip.image_name)
+    trip.image_type = JSON.parse(trip.image_type)
+    trip.image_size = JSON.parse(trip.image_size)
+
+    //console.log(trip.image_name)
+
+    const makeImgObj = () => {
+      let images = []
+      for(let i = 0; i < trip.image_name.length; i++) {
+        let img = {}
+        img['data'] = trip.image_data[i]
+        img['name'] = trip.image_name[i]
+        img['type'] = trip.image_type[i]
+        img['size'] = trip.image_size[i]
+        images = [...images, img]
+      }
+      return images
+    }
+
     return (
       <div>
         <button className='btn btn-info' onClick={this.props.cancelShow}>BACK TO ALL TRIPS</button>
@@ -51,6 +71,16 @@ class ShowTrip extends Component {
 
           USER ID: {trip.user_id} <br/>
           TRIP ID: {trip.id} <br/>
+
+          {
+            makeImgObj().map(img =>
+              <li key={Math.random()}>
+                <img src={img.data} alt={img.name}></img>
+                <p>{img.name}</p>
+                <p>{img.type} - {img.size}</p>
+              </li>
+            )
+          }
         </div>
 
         {

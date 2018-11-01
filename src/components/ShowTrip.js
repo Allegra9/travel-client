@@ -10,7 +10,7 @@ class ShowTrip extends Component {
   }
 
   chosenToEdit = (trip) => {
-    console.log(trip)
+    console.log("TRIP TO EDIT: ", trip)
     this.setState({
       tripToEdit: trip,
     })
@@ -30,21 +30,14 @@ class ShowTrip extends Component {
 
     const { trip } = this.props;
 
-    trip.image_data = JSON.parse(trip.image_data)
-    trip.image_name = JSON.parse(trip.image_name)
-    trip.image_type = JSON.parse(trip.image_type)
-    trip.image_size = JSON.parse(trip.image_size)
-
-    //console.log(trip.image_name)
-
     const makeImgObj = () => {
       let images = []
-      for(let i = 0; i < trip.image_name.length; i++) {
+      for(let i = 0; i < JSON.parse(trip.image_name).length; i++) {
         let img = {}
-        img['data'] = trip.image_data[i]
-        img['name'] = trip.image_name[i]
-        img['type'] = trip.image_type[i]
-        img['size'] = trip.image_size[i]
+        img['data'] = JSON.parse(trip.image_data)[i]
+        img['name'] = JSON.parse(trip.image_name)[i]
+        img['type'] = JSON.parse(trip.image_type)[i]
+        img['size'] = JSON.parse(trip.image_size)[i]
         images = [...images, img]
       }
       return images

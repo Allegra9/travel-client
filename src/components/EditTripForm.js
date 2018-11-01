@@ -13,10 +13,11 @@ class EditTrip extends Component{
     location: '',
     country: '',
     things_did: '',
+    notes: '',
     date_from: '',
     date_to: '',
-    notes: '',
     id: '',
+    files: [],
 
     errors: {},
     clicked: false,
@@ -53,11 +54,19 @@ class EditTrip extends Component{
     })
   }
 
+  deleteImage = (img) => {
+    console.log(img)
+    this.setState({
+      files: this.state.files.filter(image => image !== img)
+    })
+  }
+
   componentDidMount() {
     this.getTrip(this.props.trip)
   }
 
   getTrip = (trip) => {
+    console.log("in get trip: ", trip)
     this.setState({
       id: trip.id,
       user_id: trip.user_id,
@@ -68,7 +77,22 @@ class EditTrip extends Component{
       notes: trip.notes,
       date_from: trip.date_from,
       date_to: trip.date_to,
+      files: this.makeImgObj(trip.image_data, trip.image_name, trip.image_type, trip.image_size)
     })
+  }
+
+  makeImgObj = (image_data, image_name, image_type, image_size) => {
+    let images = []
+    for(let i = 0; i < JSON.parse(image_name).length; i++) {
+      let img = {}
+      img['data'] = JSON.parse(image_data)[i]
+      img['name'] = JSON.parse(image_name)[i]
+      img['type'] = JSON.parse(image_type)[i]
+      img['size'] = JSON.parse(image_size)[i]
+      images = [...images, img]
+    }
+    console.log(images)
+    return images
   }
 
   toggleCalendar = () => {
@@ -153,6 +177,7 @@ class EditTrip extends Component{
       notes,
       date_from,
       date_to,
+      files
     } = this.state
 
     return (
@@ -245,6 +270,18 @@ class EditTrip extends Component{
                 <div className='errorMsg'>{this.state.errors.openCalendar}</div>
               </div>
           }
+
+          {
+            files.map(img =>
+              <li key={Math.random()}>
+                <img src={img.data} alt={img.name}></img>
+                <p>{img.name}</p>
+                <p>{img.type} - {img.size}</p>
+                <button onClick={() => this.deleteImage(img)}>x</button>
+              </li>
+            )
+          }
+
           <input type="submit" value="UPDATE" className="btn btn-info submitBtn"/>
           <div className='errorMsg'>{this.state.errors.server}</div>
         </form>
